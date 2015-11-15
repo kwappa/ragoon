@@ -1,4 +1,7 @@
 require 'ragoon/version'
+require 'ragoon/envelope'
+
+require 'nokogiri'
 
 module Ragoon
   @@secret_options = {}

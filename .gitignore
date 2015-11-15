@@ -8,4 +8,4 @@
 /spec/reports/
 /tmp/
 /vendor/bundle/
-
+/.secret_options

@@ -1,4 +1,4 @@
-class Ragoon::Envelope
+module Ragoon::Services
   def self.doc_template
     Nokogiri::XML(xml_template)
   end

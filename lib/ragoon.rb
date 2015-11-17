@@ -1,5 +1,5 @@
 require 'ragoon/version'
-require 'ragoon/envelope'
+require 'ragoon/service'
 
 require 'nokogiri'
 

@@ -1,5 +1,6 @@
 require 'ragoon/version'
-require 'ragoon/service'
+require 'ragoon/services'
+Dir.glob('./lib/ragoon/services/*.rb', &method(:require))
 
 require 'nokogiri'
 

@@ -1,4 +1,14 @@
 module Ragoon::Services
+  SERVICE_LOCATIONS = {
+    schedule: '/cbpapi/schedule/api?',
+  }.freeze
+
+  def endpoint
+    endpoint = URI(Ragoon.garoon_endpoint)
+    action_type = self.class.name.split('::').pop.downcase.to_sym
+    "#{endpoint.scheme}://#{endpoint.host}#{endpoint.path}#{SERVICE_LOCATIONS[action_type]}"
+  end
+
   def self.doc_template
     Nokogiri::XML(xml_template)
   end

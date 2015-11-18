@@ -1,8 +1,11 @@
 require 'ragoon/version'
 require 'ragoon/services'
+require 'ragoon/xml/request'
+
 Dir.glob('./lib/ragoon/services/*.rb', &method(:require))
 
 require 'nokogiri'
+require 'rest-client'
 
 module Ragoon
   @@secret_options = {}

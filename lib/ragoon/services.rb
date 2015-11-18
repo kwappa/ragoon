@@ -6,7 +6,7 @@ class Ragoon::Services
   attr_reader :action_type
 
   def initialize
-    @doc = Ragoon::Xml::Request.new
+    @request = Ragoon::Xml::Request.new
     @action_type = self.class.name.split('::').pop.downcase.to_sym
   end
 

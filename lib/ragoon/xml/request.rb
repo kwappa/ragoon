@@ -1,18 +1,22 @@
 module Ragoon::Xml
   class Request
-    attr_accessor :action
+    ACTION_PLACEHOLDER = '<!-- REQUEST_ACTION -->'.freeze
+    BODY_PLACEHOLDER   = '<!-- REQUEST_BODY -->'.freeze
 
-    def initialize
-      @doc = Nokogiri::XML.parse(self.class.template)
-    end
+    attr_writer :action_name, :body_node
 
     def to_xml
-      @doc.to_xml
+      self.class.template.dup.
+        gsub!(ACTION_PLACEHOLDER, @action_name).
+        gsub!(BODY_PLACEHOLDER,   @body_node.to_xml)
     end
 
-    def action=(action)
-      @action = action
-      @doc.xpath('//act:Action', 'act' => 'http://schemas.xmlsoap.org/ws/2003/03/addressing').first.content = action
+    def create_node(name, attributes = {})
+      node = Nokogiri::XML::Node.new(name, Nokogiri::XML.parse('<xml />'))
+      attributes.each do |key, value|
+        node[key.to_s] = value
+      end
+      node
     end
 
     def self.template
@@ -26,6 +30,7 @@ module Ragoon::Xml
   <SOAP-ENV:Header>
     <Action SOAP-ENV:mustUnderstand="1"
             xmlns="http://schemas.xmlsoap.org/ws/2003/03/addressing">
+      #{ACTION_PLACEHOLDER}
     </Action>
     <Security xmlns:wsu="http://schemas.xmlsoap.org/ws/2002/07/utility"
               SOAP-ENV:mustUnderstand="1"
@@ -43,10 +48,7 @@ module Ragoon::Xml
     <Locale>jp</Locale>
   </SOAP-ENV:Header>
   <SOAP-ENV:Body>
-    <ScheduleGetEvents>
-      <parameters start="2015-11-18T08:00:00" end="2015-11-18T23:00:00" >
-      </parameters>
-    </ScheduleGetEvents>
+    #{BODY_PLACEHOLDER}
   </SOAP-ENV:Body>
 </SOAP-ENV:Envelope>
 XML

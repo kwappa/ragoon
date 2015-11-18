@@ -3,11 +3,11 @@ class Ragoon::Services
     schedule: '/cbpapi/schedule/api?',
   }.freeze
 
-  attr_reader :action_type
+  attr_reader :client, :action_type
 
   def initialize
-    @request = Ragoon::Xml::Request.new
     @action_type = self.class.name.split('::').pop.downcase.to_sym
+    @client = Ragoon::Client.new(self.endpoint)
   end
 
   def endpoint

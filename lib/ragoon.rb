@@ -1,6 +1,7 @@
 require 'ragoon/version'
 require 'ragoon/services'
-require 'ragoon/xml/request'
+require 'ragoon/xml'
+require 'ragoon/client'
 
 Dir.glob('./lib/ragoon/services/*.rb', &method(:require))
 

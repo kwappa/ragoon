@@ -1,26 +1,23 @@
-module Ragoon::Xml
-  class Request
-    ACTION_PLACEHOLDER = '<!-- REQUEST_ACTION -->'.freeze
-    BODY_PLACEHOLDER   = '<!-- REQUEST_BODY -->'.freeze
+module Ragoon::XML
+  ACTION_PLACEHOLDER = '<!-- REQUEST_ACTION -->'.freeze
+  BODY_PLACEHOLDER   = '<!-- REQUEST_BODY -->'.freeze
 
-    attr_writer :action_name, :body_node
+  def self.render(action_name, body_node)
+    template.dup.
+      gsub!(ACTION_PLACEHOLDER, action_name).
+      gsub!(BODY_PLACEHOLDER,   body_node.to_xml)
+  end
 
-    def to_xml
-      self.class.template.dup.
-        gsub!(ACTION_PLACEHOLDER, @action_name).
-        gsub!(BODY_PLACEHOLDER,   @body_node.to_xml)
+  def self.create_node(name, attributes = {})
+    node = Nokogiri::XML::Node.new(name, Nokogiri::XML.parse('<xml />'))
+    attributes.each do |key, value|
+      node[key.to_s] = value
     end
+    node
+  end
 
-    def create_node(name, attributes = {})
-      node = Nokogiri::XML::Node.new(name, Nokogiri::XML.parse('<xml />'))
-      attributes.each do |key, value|
-        node[key.to_s] = value
-      end
-      node
-    end
-
-    def self.template
-<<"XML"
+  def self.template
+    <<"XML"
 <?xml version="1.0" encoding="UTF-8"?>
 <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://www.w3.org/2003/05/soap-envelope"
                    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
@@ -52,6 +49,5 @@ module Ragoon::Xml
   </SOAP-ENV:Body>
 </SOAP-ENV:Envelope>
 XML
-    end
   end
 end

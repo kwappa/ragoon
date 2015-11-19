@@ -21,8 +21,8 @@ class Ragoon::Services::Schedule < Ragoon::Services
     when 'ScheduleGetEvents'
       today = Date.today
       {
-        start: Time.local(today.year, today.month, today.day,  8, 0),
-        end:   Time.local(today.year, today.month, today.day, 23, 0),
+        start: Time.local(today.year, today.month, today.day,     0).utc,
+        end:   Time.local(today.year, today.month, today.day + 1, 0).utc,
       }
     else
       {}

@@ -10,3 +10,5 @@
 /vendor/bundle/
 /.secret_options
 /build/
+/release/
+

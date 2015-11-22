@@ -19,7 +19,7 @@ class Ragoon::Services::Schedule < Ragoon::Services
       {
         title:    public_event ? event[:detail] : '予定あり',
         period:   start_and_end(event),
-        facility: public_event ? facility_names(event) : '',
+        facility: public_event ? facility_names(event) : [],
       }
     end
   end

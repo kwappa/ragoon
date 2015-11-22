@@ -1,9 +1,8 @@
 require 'ragoon/version'
-require 'ragoon/services'
 require 'ragoon/xml'
 require 'ragoon/client'
-
-Dir.glob('./lib/ragoon/services/*.rb', &method(:require))
+require 'ragoon/services'
+require 'ragoon/services/schedule'
 
 require 'nokogiri'
 require 'rest-client'

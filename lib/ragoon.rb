@@ -3,6 +3,7 @@ require 'ragoon/xml'
 require 'ragoon/client'
 require 'ragoon/services'
 require 'ragoon/services/schedule'
+require 'ragoon/services/notification'
 
 require 'nokogiri'
 require 'rest-client'

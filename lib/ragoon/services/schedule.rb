@@ -47,11 +47,7 @@ class Ragoon::Services::Schedule < Ragoon::Services
   def default_options(action_name)
     case action_name
     when 'ScheduleGetEvents'
-      today = Date.today
-      {
-        start: Time.local(today.year, today.month, today.day,     0).utc,
-        end:   Time.local(today.year, today.month, today.day + 1, 0).utc,
-      }
+      Ragoon::Services.start_and_end
     else
       {}
     end

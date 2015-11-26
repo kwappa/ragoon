@@ -14,4 +14,8 @@ class Ragoon::Client
   def result_set
     @result_set ||= Nokogiri::XML.parse(response.body)
   end
+
+  def reset
+    @result_set = nil
+  end
 end

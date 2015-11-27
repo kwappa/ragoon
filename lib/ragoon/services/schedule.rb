@@ -21,6 +21,7 @@ class Ragoon::Services::Schedule < Ragoon::Services
       {
         title:    public_event ? event[:detail] : '予定あり',
         period:   start_and_end(event),
+        plan:     public_event ? event[:plan] : '',
         facility: public_event ? facility_names(event) : [],
       }
     end
@@ -38,7 +39,7 @@ class Ragoon::Services::Schedule < Ragoon::Services
     else
       period = event.children.xpath('ev:datetime', ev: "http://schemas.cybozu.co.jp/schedule/2008").first
 
-      return 'error' if period.nil?
+      return '' if period.nil?
 
       start_time = Time.parse(period[:start]).localtime.strftime('%R')
       end_time = event[:start_only] == 'true' ? '' : Time.parse(period[:end]).localtime.strftime('%R')

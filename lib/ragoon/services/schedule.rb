@@ -7,14 +7,16 @@ class Ragoon::Services::Schedule < Ragoon::Services
     body_node = Ragoon::XML.create_node(action_name)
     parameter_node = Ragoon::XML.create_node(
       'parameters',
-      start: options[:start].strftime('%FT%T'),
-      end:   options[:end].strftime('%FT%T')
+      start:           options[:start].strftime('%FT%T'),
+      end:             options[:end].strftime('%FT%T'),
+      start_for_daily: options[:start].strftime('%F'),
+      end_for_daily:   options[:end].strftime('%F'),
     )
     body_node.add_child(parameter_node)
 
     client.request(action_name, body_node)
-
-    events = client.result_set.xpath('//schedule_event').find_all { |ev| ev[:event_type] == 'normal' }.map do |event|
+    events = client.result_set.xpath('//schedule_event').
+             find_all { |ev| ev[:event_type] != 'banner' }.map do |event|
       public_event = event[:public_type] == 'public'
       {
         title:    public_event ? event[:detail] : '予定あり',

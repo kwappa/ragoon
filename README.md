@@ -11,9 +11,9 @@ service = Ragoon::Services::Schedule.new
 events = service.schedule_get_event
 
 => [
-  {:title=>"予定あり", :period=>"13:00〜14:00", :facility=>""},
-  {:title=>"セクションMTG", :period=>"15:00〜15:30", :facility=>["会議室"]},
-  {:title=>"予定あり", :period=>"終日", :facility=>""}
+  {:title=>"予定あり", :period=>"13:00〜14:00", :plan=>"作業", :facility=>""},
+  {:title=>"セクションMTG", :period=>"15:00〜15:30", :plan=>"社内MTG", :facility=>["会議室"]},
+  {:title=>"予定あり", :period=>"終日", :plan=>"", :facility=>""}
 ]
 
 ```

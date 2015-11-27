@@ -37,14 +37,30 @@ class Ragoon::Services::Schedule < Ragoon::Services
     if event[:allday] == 'true'
       '終日'
     else
-      period = event.children.xpath('ev:datetime', ev: "http://schemas.cybozu.co.jp/schedule/2008").first
+      case event[:event_type]
+      when 'normal'
+        period = event.children.xpath('ev:datetime', ev: "http://schemas.cybozu.co.jp/schedule/2008").first
+        return '' if period.nil?
+        start_time = parse_event_time(period[:start])
+        end_time = event[:start_only] == 'true' ? '' : parse_event_time(period[:end])
+      when 'repeat'
+        repeat_info = event.xpath('ev:repeat_info', ev: 'http://schemas.cybozu.co.jp/schedule/2008').first
+        return '' if repeat_info.nil?
+        period = repeat_info.xpath('ev:condition', ev: 'http://schemas.cybozu.co.jp/schedule/2008').first
+        return '' if period.nil?
+        start_time = parse_event_time(period[:start_time])
+        end_time = event[:start_only] == 'true' ? '' : parse_event_time(period[:end_time])
+      else
+        return ''
+      end
 
-      return '' if period.nil?
-
-      start_time = Time.parse(period[:start]).localtime.strftime('%R')
-      end_time = event[:start_only] == 'true' ? '' : Time.parse(period[:end]).localtime.strftime('%R')
       "#{start_time}〜#{end_time}"
     end
+  end
+
+
+  def parse_event_time(time)
+    Time.parse(time).localtime.strftime('%R')
   end
 
   def default_options(action_name)

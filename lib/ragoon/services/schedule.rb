@@ -17,12 +17,15 @@ class Ragoon::Services::Schedule < Ragoon::Services
     client.request(action_name, body_node)
     events = client.result_set.xpath('//schedule_event').
              find_all { |ev| ev[:event_type] != 'banner' }.map do |event|
-      public_event = event[:public_type] == 'public'
+      period = start_and_end(event)
       {
-        title:    public_event ? event[:detail] : '予定あり',
-        period:   start_and_end(event),
-        plan:     public_event ? event[:plan] : '',
-        facility: public_event ? facility_names(event) : [],
+        title:      event[:detail],
+        start_at:   period[:start_at],
+        end_at:     period[:end_at],
+        plan:       event[:plan],
+        facilities: facility_names(event),
+        private:    !(event[:public_type] == 'public'),
+        allday:     event[:allday] == 'true',
       }
     end
   end
@@ -34,33 +37,41 @@ class Ragoon::Services::Schedule < Ragoon::Services
   end
 
   def start_and_end(event)
-    if event[:allday] == 'true'
-      '終日'
-    else
+    start_at = nil
+    end_at   = nil
+
+    unless event[:allday] == 'true'
       case event[:event_type]
       when 'normal'
         period = event.children.xpath('ev:datetime', ev: "http://schemas.cybozu.co.jp/schedule/2008").first
-        return '' if period.nil?
-        start_time = parse_event_time(period[:start])
-        end_time = event[:start_only] == 'true' ? '' : parse_event_time(period[:end])
+        unless period.nil?
+          start_at = parse_event_time(period[:start])
+          unless event[:start_only] == 'true'
+            end_at = parse_event_time(period[:end])
+          end
+        end
       when 'repeat'
         repeat_info = event.xpath('ev:repeat_info', ev: 'http://schemas.cybozu.co.jp/schedule/2008').first
-        return '' if repeat_info.nil?
-        period = repeat_info.xpath('ev:condition', ev: 'http://schemas.cybozu.co.jp/schedule/2008').first
-        return '' if period.nil?
-        start_time = parse_event_time(period[:start_time])
-        end_time = event[:start_only] == 'true' ? '' : parse_event_time(period[:end_time])
-      else
-        return ''
+        unless repeat_info.nil?
+          period = repeat_info.xpath('ev:condition', ev: 'http://schemas.cybozu.co.jp/schedule/2008').first
+          unless period.nil?
+            start_at = parse_event_time(period[:start_time])
+            unless event[:start_only] == 'true'
+              end_at = parse_event_time(period[:end_time])
+            end
+          end
+        end
       end
-
-      "#{start_time}〜#{end_time}"
     end
+
+    {
+      start_at: start_at,
+      end_at:   end_at,
+    }
   end
 
-
   def parse_event_time(time)
-    Time.parse(time).localtime.strftime('%R')
+    Time.parse(time).localtime.to_s
   end
 
   def default_options(action_name)

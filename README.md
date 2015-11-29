@@ -11,9 +11,9 @@ service = Ragoon::Services::Schedule.new
 events = service.schedule_get_event
 
 => [
-  {:title=>"予定あり", :period=>"13:00〜14:00", :plan=>"作業", :facility=>""},
-  {:title=>"セクションMTG", :period=>"15:00〜15:30", :plan=>"社内MTG", :facility=>["会議室"]},
-  {:title=>"予定あり", :period=>"終日", :plan=>"", :facility=>""}
+  {:title=>"セクションMTG", :start_at=>"2015-11-29 15:00:00 +0900", :end_at=>"2015-11-29 15:30:00 +0900", :plan=>"社内MTG", :facilities=>["会議室1"], :private=>true, :allday=>false},
+  {:title=>"エンジニア共有会", :start_at=>"2015-11-29 16:00:00 +0900", :end_at=>"2015-11-29 16:30:00 +0900" :plan=>"社内MTG", :facilities=>["会議室1", "会議室2"], :private=>true, :allday=>false},
+  {:title=>"監査対応", :start_at=>nil, :end_at=>nil, :plan=>"作業", :facilities=>[], :private=>false, :allday=>true}
 ]
 
 ```

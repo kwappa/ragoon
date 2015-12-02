@@ -23,7 +23,9 @@ class Ragoon::Services::Notification < Ragoon::Services
     end
 
     notifications = notification_get_notifications_by_id(items)
-    keys = notifications.xpath('//notification').first.attributes.keys.map(&:to_sym)
+    first_item = notifications.xpath('//notification').first
+    return [] if first_item.nil?
+    keys = first_item.attributes.keys.map(&:to_sym)
 
     notifications.xpath('//notification').each_with_object([]) do |notification, result|
       result.push(
@@ -60,10 +62,10 @@ class Ragoon::Services::Notification < Ragoon::Services
     notification_items.each do |notification_item|
       parameter_node.add_child(
         Ragoon::XML.create_node(
-        'notification_id',
-        module_id: notification_item[:module_id],
-        item:      notification_item[:item],
-      )
+          'notification_id',
+          module_id: notification_item[:module_id],
+          item:      notification_item[:item]
+        )
       )
     end
 
@@ -71,15 +73,5 @@ class Ragoon::Services::Notification < Ragoon::Services
 
     client.request(action_name, body_node)
     client.result_set
-  end
-
-
-  def default_options(action_name)
-    case action_name
-    when 'ScheduleGetEvents'
-      Ragoon::Services.start_and_end
-    else
-      {}
-    end
   end
 end

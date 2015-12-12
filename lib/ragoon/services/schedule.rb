@@ -15,10 +15,12 @@ class Ragoon::Services::Schedule < Ragoon::Services
     body_node.add_child(parameter_node)
 
     client.request(action_name, body_node)
+
     events = client.result_set.xpath('//schedule_event').
              find_all { |ev| ev[:event_type] != 'banner' }.map do |event|
       period = start_and_end(event)
       {
+        id:         event_url(event[:id]),
         title:      event[:detail],
         start_at:   period[:start_at],
         end_at:     period[:end_at],
@@ -28,6 +30,10 @@ class Ragoon::Services::Schedule < Ragoon::Services
         allday:     event[:allday] == 'true',
       }
     end
+  end
+
+  def event_url(id)
+    "#{Ragoon::garoon_endpoint.gsub(/\?.*\Z/, '')}/schedule/view?event=#{id}"
   end
 
   def facility_names(event)

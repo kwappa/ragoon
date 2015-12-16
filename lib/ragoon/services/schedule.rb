@@ -20,7 +20,8 @@ class Ragoon::Services::Schedule < Ragoon::Services
              find_all { |ev| ev[:event_type] != 'banner' }.map do |event|
       period = start_and_end(event)
       {
-        url:         event_url(event[:id]),
+        id:         event[:id],
+        url:        event_url(event[:id]),
         title:      event[:detail],
         start_at:   period[:start_at],
         end_at:     period[:end_at],

@@ -1,5 +1,7 @@
 # Ragoon
 
+[![Build Status](https://travis-ci.org/kwappa/ragoon.svg?branch=master)](https://travis-ci.org/kwappa/ragoon)
+
 Ragoon is simple Garoon 3 API Client.
 
 - https://cybozudev.zendesk.com/hc/ja/categories/200157760-Garoon-API

@@ -41,7 +41,6 @@ class Ragoon::Services::Schedule < Ragoon::Services
         plan:        options[:plan],
         detail:      options[:title],
         description: options[:description],
-        allday:      options[:allday],
         public_type: (options[:private] ? 'private' : 'public')
       }
     )
@@ -65,11 +64,20 @@ class Ragoon::Services::Schedule < Ragoon::Services
       'when',
       xmlns: 'http://schemas.cybozu.co.jp/schedule/2008'
     )
-    date_node = Ragoon::XML.create_node(
-      'datetime',
-      start: options[:start_at].utc.strftime('%FT%T'),
-      end:   options[:end_at].utc.strftime('%FT%T')
-    )
+    date_node =
+      if options[:allday]
+        Ragoon::XML.create_node(
+          'date',
+          start: options[:start_at].strftime('%F'),
+          end:   options[:end_at].strftime('%F')
+        )
+      else
+        Ragoon::XML.create_node(
+          'datetime',
+          start: options[:start_at].utc.strftime('%FT%T'),
+          end:   options[:end_at].utc.strftime('%FT%T')
+        )
+      end
     when_node.add_child(date_node)
     schedule_event_node.add_child(when_node)
 

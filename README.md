@@ -12,7 +12,7 @@ Ragoon is simple Garoon 3 API Client.
 
 ```
 service = Ragoon::Services::Schedule.new
-events = service.schedule_get_event
+events = service.schedule_get_events
 
 => [
 {:id=>"1334236", :url=>"https://example.co.jp/cgi-bin/cbgrn/grn.cgi/schedule/view?event=1334236", :title=>"ログ収集システムについて", :start_at=>"2016-01-15 13:30:00 +0900", :end_at=>"2016-01-15 14:00
@@ -20,6 +20,19 @@ events = service.schedule_get_event
 {:id=>"1336040", :url=>"https://example.co.jp/cgi-bin/cbgrn/grn.cgi/schedule/view?event=1336040", :title=>"スプリントMTG", :start_at=>"2016-01-15 14:00:00 +0900", :end_at=>"2016-01-15 15:00:00
 +0900", :plan=>"社内MTG", :facilities=>["会議室 13-e","会議室 13-f"], :private=>false, :allday=>false},
 ]
+
+service.schedule_add_event(
+  title: 'プロジェクトキックオフ',
+  description: '新規プロジェクト概要説明',
+  start_at: Time.new(2016, 1, 15, 13, 0),
+  end_at: Time.new(2016, 1, 15, 13, 30),
+  plan: '社内MTG',
+  users: [1],
+  private: false,
+  allday: false
+)
+
+=> {:id=>"1338211", :url=>"https://example.co.jp/cgi-bin/cbgrn/grn.cgi/schedule/view?event=1338211", :title=>"プロジェクトキックオフ", :start_at=>"2016-01-15 13:00:00 +0900", :end_at=>"2016-01-15 13:30:00+0900", :plan=>"社内MTG", :facilities=>[], :users=>[{:id => 1, :name => "田中　太郎"}], :private=>false, :allday=>false}
 ```
 
 ### Notification

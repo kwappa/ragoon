@@ -9,8 +9,8 @@ class Ragoon::Services::Schedule < Ragoon::Services
       'parameters',
       start:           options[:start].strftime('%FT%T'),
       end:             options[:end].strftime('%FT%T'),
-      start_for_daily: options[:start].strftime('%F'),
-      end_for_daily:   options[:end].strftime('%F'),
+      start_for_daily: options[:start].localtime.strftime('%F'),
+      end_for_daily:   options[:end].localtime.strftime('%F'),
     )
     body_node.add_child(parameter_node)
 

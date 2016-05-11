@@ -19,7 +19,7 @@ class Ragoon::Services
   def self.start_and_end(date = Date.today)
     {
       start: date.to_time.utc,
-      end:   (date + 1).to_time.utc,
+      end:   ((date + 1).to_time - 1).utc,
     }
   end
 end

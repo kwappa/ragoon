@@ -58,6 +58,16 @@ class TestRagoonServices < Test::Unit::TestCase
                    service.endpoint)
     end
 
+    test 'by argument' do
+      service = Ragoon::Services::Schedule.new(
+        endpoint: "http://example.com/by_arg",
+        username: "username",
+        password: "password"
+      )
+      assert_equal("http://example.com/by_arg/cbpapi/schedule/api?",
+                   service.endpoint)
+    end
+
     teardown do
       ENV.delete('GAROON_ENDPOINT')
       ENV.delete('GAROON_USERNAME')

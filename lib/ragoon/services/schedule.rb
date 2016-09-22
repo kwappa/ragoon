@@ -106,7 +106,7 @@ class Ragoon::Services::Schedule < Ragoon::Services
   end
 
   def event_url(id)
-    "#{Ragoon::garoon_endpoint.gsub(/\?.*\Z/, '')}/schedule/view?event=#{id}"
+    "#{base_endpoint}/schedule/view?event=#{id}"
   end
 
   def facility_names(event)

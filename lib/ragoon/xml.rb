@@ -2,8 +2,8 @@ module Ragoon::XML
   ACTION_PLACEHOLDER = '<!-- REQUEST_ACTION -->'.freeze
   BODY_PLACEHOLDER   = '<!-- REQUEST_BODY -->'.freeze
 
-  def self.render(action_name, body_node)
-    template.dup.
+  def self.render(action_name, body_node, options)
+    template(options).dup.
       gsub!(ACTION_PLACEHOLDER, action_name).
       gsub!(BODY_PLACEHOLDER,   body_node.to_xml)
   end
@@ -16,7 +16,7 @@ module Ragoon::XML
     node
   end
 
-  def self.template
+  def self.template(options)
     <<"XML"
 <?xml version="1.0" encoding="UTF-8"?>
 <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://www.w3.org/2003/05/soap-envelope"
@@ -33,8 +33,8 @@ module Ragoon::XML
               SOAP-ENV:mustUnderstand="1"
               xmlns="http://schemas.xmlsoap.org/ws/2002/12/secext">
       <UsernameToken wsu:Id="id">
-        <Username>#{Ragoon.garoon_username}</Username>
-        <Password>#{Ragoon.garoon_password}</Password>
+        <Username>#{options[:username]}</Username>
+        <Password>#{options[:password]}</Password>
       </UsernameToken>
     </Security>
     <Timestamp SOAP-ENV:mustUnderstand="1" Id="id"

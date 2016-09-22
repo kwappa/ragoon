@@ -2,6 +2,7 @@ class Ragoon::Services
   SERVICE_LOCATIONS = {
     schedule:     '/cbpapi/schedule/api?',
     notification: '/cbpapi/notification/api?',
+    workflow:     '/cbpapi/workflow/api?',
   }.freeze
 
   attr_reader :client, :action_type

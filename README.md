@@ -75,6 +75,95 @@ notifications = service.retreive
 ]
 ```
 
+### Workflow
+
+```
+service = Ragoon::Services::Workflow.new
+service.workflow_get_requests(
+  request_form_id: 41,
+  filter: 'All',
+  start_request_date:  Time.new(2011,  6, 19, 13, 30),
+  end_request_date:    Time.new(2014, 12,  1, 19, 50),
+  start_approval_date: Time.new(2011,  6,  1, 19, 40),
+  end_approval_date:   Time.new(2014, 12, 31,  9, 45),
+  applicant:           14,
+  last_approval:       6,
+  start_to_get_information_from: 2,
+  maximum_request_amount_to_get: 10
+)
+
+=> [
+{:id=>"33",
+  :number=>"33",
+  :priority=>"0",
+  :subject=>"12月7日休日出勤",
+  :status=>"承認",
+  :applicant=>"14",
+  :last_approver=>"6",
+  :request_date=>2014-12-01 19:40:26 +0900}
+]
+
+service.workflow_get_requests_by_id([33])
+
+=> [
+ {:id=>"33",
+  :number=>"33",
+  :name=>"休日出勤申請（12月7日休日出勤）",
+  :processing_step=>"97",
+  :status=>"承認",
+  :urgent=>"false",
+  :version=>"1417430538",
+  :date=>2014-12-01 19:40:26 +0900,
+  :status_type=>"approved",
+  :applicant=>{:id=>"14", :name=>"松田 環奈"},
+  :items=>
+   [{:name=>"社員番号", :value=>"3110342"}],
+  :steps=>
+   [{:id=>"97",
+     :name=>"経理担当者",
+     :type=>"回覧",
+     :is_approval_step=>"0",
+     :processors=>
+      [{:id=>"13", :name=>"加藤 美咲", :comment=>nil}]}]}
+]
+
+service.workflow_get_sent_application_versions([
+    {id: 23, version: 1306486544},
+    {id: 20, version: 1306486544},
+    {id: 22, version: 1306486533},
+  ],
+  start_date: Time.new(2011, 5, 25, 18, 50),
+  end_date:   Time.new(2011, 6, 26, 18,  0)
+)
+
+=> [
+ {:id=>"22", :version=>"1306486534", :operation=>"modify"},
+ {:id=>"23", :version=>"0", :operation=>"remove"},
+ {:id=>"21", :version=>"1415185979", :operation=>"add"}
+]
+
+service.workflow_get_sent_applications_by_id([21])
+
+=> [{:id=>"21",
+  :number=>"21",
+  :name=>"休日出勤申請（休日出勤申請）",
+  :processing_step=>"65",
+  :status=>"承認",
+  :urgent=>"false",
+  :version=>"1415185979",
+  :date=>2011-05-27 16:10:41 +0900,
+  :status_type=>"approved",
+  :applicant=>{:id=>"6", :name=>"佐藤 昇"},
+  :items=>
+   [{:name=>"社員番号", :value=>"3110334"}],
+  :steps=>
+   [{:id=>"63",
+     :name=>"部長",
+     :type=>"承認（全員）",
+     :is_approval_step=>"1",
+     :processors=>[{:id=>"6", :name=>"佐藤 昇", :comment=>nil}]}]}]
+```
+
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).

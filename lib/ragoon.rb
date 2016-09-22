@@ -4,6 +4,7 @@ require 'ragoon/client'
 require 'ragoon/services'
 require 'ragoon/services/schedule'
 require 'ragoon/services/notification'
+require 'ragoon/services/workflow'
 
 require 'nokogiri'
 require 'rest-client'

@@ -1,0 +1,219 @@
+<!--
+
+# FIXTURE EVENTS IN CALENDAR
+
+## 9/26
+11:00-12:30 Repeat everyday
+20:00-09/27 Normal 2days Event
+
+## 9/27
+*********** 2days Event
+09/26-10:30 Normal 2days Event
+11:00-12:30 Repeat everyday
+12:00-14:15 Normal Event
+21:30-      Repeat week start_only
+22:00-      Start only Event
+
+## 9/28
+*********** Allday Event
+*********** 2days Event
+03:45-04:15 Repeat lastweek
+11:00-12:30 Repeat everyday
+16:30-17:00 Repeat month
+
+-->
+
+<!-- nomal, allday -->
+<schedule_event
+    id="dummy"
+    version="dummy"
+    event_type="normal"
+    public_type="public"
+    detail="Allday Event"
+    timezone="Asia/Tokyo"
+    end_timezone="Asia/Tokyo"
+    allday="true"
+    start_only="false">
+  <members xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+    <member><user id="6"/></member>
+  </members>
+  <when xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+    <date start="2016-09-28" end="2016-09-28" />
+  </when>
+</schedule_event>
+
+<!-- nomal, allday, 2days -->
+<schedule_event
+    id="dummy"
+    version="dummy"
+    event_type="normal"
+    public_type="public"
+    detail="2days Event"
+    timezone="Asia/Tokyo"
+    end_timezone="Asia/Tokyo"
+    allday="true"
+    start_only="false">
+  <members xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+    <member><user id="6"/></member>
+  </members>
+  <when xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+    <date start="2016-09-27" end="2016-09-28" />
+  </when>
+</schedule_event>
+
+<!-- nomal, startonly -->
+<schedule_event
+    id="dummy"
+    version="dummy"
+    event_type="normal"
+    public_type="public"
+    detail="Start only Event"
+    timezone="Asia/Tokyo"
+    end_timezone="Asia/Tokyo"
+    allday="false"
+    start_only="true">
+  <members xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+    <member><user id="6"/></member>
+  </members>
+  <when xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+    <datetime start="2016-09-27T13:00:00Z" /> <!-- 22:00 JST -->
+  </when>
+</schedule_event>
+
+<!-- nomal -->
+<schedule_event
+    id="dummy"
+    version="dummy"
+    event_type="normal"
+    public_type="public"
+    detail="Normal Event"
+    timezone="Asia/Tokyo"
+    end_timezone="Asia/Tokyo"
+    allday="false"
+    start_only="false">
+  <members xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+    <member><user id="6"/></member>
+    <member><facility id="1"/></member>
+  </members>
+  <when xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+    <datetime start="2016-09-27T03:00:00Z"  end="2016-09-27T05:15:00Z"/> <!-- 12:00-14:15 JST -->
+  </when>
+</schedule_event>
+
+<!-- nomal, 2days -->
+<schedule_event
+    id="dummy"
+    version="dummy"
+    event_type="normal"
+    public_type="public"
+    detail="Normal 2days Event"
+    timezone="Asia/Tokyo"
+    end_timezone="Asia/Tokyo"
+    allday="false"
+    start_only="false">
+  <members xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+    <member><user id="6"/></member>
+  </members>
+  <when xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+    <datetime start="2016-09-26T11:00:00Z"  end="2016-09-27T01:30:00Z"/> <!-- 26T20:00-27T10:30 JST -->
+  </when>
+</schedule_event>
+
+<!-- repeat, everyday -->
+<schedule_event
+  id="dummy"
+  version="dummy"
+  event_type="repeat"
+  public_type="public"
+  plan="【会議】"
+  detail="Repeat everyday"
+  description="毎日指定イベント"
+  timezone="Asia/Tokyo"
+  allday="false"
+  start_only="false"
+  >
+  <members xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+    <member><user id="6"/></member>
+  </members>
+  <repeat_info xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+    <condition
+      type="day"
+      start_date="2016-09-20" end_date="2016-10-02"
+      start_time="11:00:00" end_time="12:30:00"/>
+  </repeat_info>
+</schedule_event>
+
+<!-- repeat, week, start_only -->
+<schedule_event
+  id="dummy"
+  version="dummy"
+  event_type="repeat"
+  public_type="public"
+  detail="Repeat week start_only"
+  timezone="Asia/Tokyo"
+  allday="false"
+  start_only="true"
+  >
+  <members xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+    <member><user id="6"/></member>
+  </members>
+  <repeat_info xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+    <condition
+      type="week" week="2"
+      start_date="2016-09-01" end_date="2016-12-28"
+      start_time="21:30:00"/>
+    <exclusive_datetimes>
+    </exclusive_datetimes>
+  </repeat_info>
+</schedule_event>
+
+<!-- repeat, lastweek -->
+<schedule_event
+  id="dummy"
+  version="dummy"
+  event_type="repeat"
+  public_type="public"
+  detail="Repeat lastweek"
+  timezone="Asia/Tokyo"
+  allday="false"
+  start_only="false"
+  >
+  <members xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+    <member><user id="6"/></member>
+    <member><facility id="4"/></member>
+  </members>
+  <repeat_info xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+    <condition
+      type="lastweek" week="3"
+      start_date="2016-09-01" end_date="2016-12-28"
+      start_time="03:45:00" end_time="04:15:00" />
+    <exclusive_datetimes>
+    </exclusive_datetimes>
+  </repeat_info>
+</schedule_event>
+
+<!-- repeat, month -->
+<schedule_event
+  id="dummy"
+  version="dummy"
+  event_type="repeat"
+  public_type="public"
+  detail="Repeat month"
+  timezone="Asia/Tokyo"
+  allday="false"
+  start_only="false"
+  >
+  <members xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+    <member><user id="6"/></member>
+    <member><facility id="4"/></member>
+  </members>
+  <repeat_info xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+    <condition
+      type="month" day="28"
+      start_date="2016-09-01" end_date="2016-12-28"
+      start_time="16:30:00" end_time="17:00:00" />
+    <exclusive_datetimes>
+    </exclusive_datetimes>
+  </repeat_info>
+</schedule_event>
+

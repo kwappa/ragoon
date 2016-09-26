@@ -24,6 +24,10 @@ class Ragoon::Services
     }
   end
 
+  def garoon_endpoint
+    base_endpoint
+  end
+
   private
 
   def base_endpoint

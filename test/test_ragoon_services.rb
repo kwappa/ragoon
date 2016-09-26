@@ -76,4 +76,22 @@ class TestRagoonServices < Test::Unit::TestCase
     end
   end
 
+  sub_test_case '#garoon_endpoint' do
+    setup do
+      ENV['GAROON_ENDPOINT'] = "http://example.com/by_env"
+      ENV['GAROON_USERNAME'] = "username"
+      ENV['GAROON_PASSWORD'] = "password"
+      @service = Ragoon::Services::Schedule.new
+    end
+
+    test 'returns correct endpoint URL' do
+      assert_equal(@service.garoon_endpoint, ENV['GAROON_ENDPOINT'])
+    end
+
+    teardown do
+      ENV.delete('GAROON_ENDPOINT')
+      ENV.delete('GAROON_USERNAME')
+      ENV.delete('GAROON_PASSWORD')
+    end
+  end
 end

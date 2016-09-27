@@ -7,6 +7,12 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
 
   event_url_base = 'http://onlinedemo2.cybozu.info/scripts/garoon/grn.exe/schedule/view?event='
 
+  dummy_opts = {
+    endpoint: "http://example.com/path/to",
+    username: "username",
+    password: "password"
+  }
+
   sub_test_case '.event_url(id)' do
     test 'endpoint without query' do
       opts = {
@@ -80,8 +86,8 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
         assert_include_event({
             :title => "Allday Event",
             :plan => nil,
-            :start_at => nil,
-            :end_at => nil,
+            :start_at => '2016-09-28 00:00:00 +0900',
+            :end_at => '2016-09-28 23:59:59 +0900',
             :users => [{:id => 6, :name => "佐藤 昇"}],
             :facilities => [],
             :private => false,
@@ -91,8 +97,8 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
         assert_include_event({
             :title => "2days Event",
             :plan => nil,
-            :start_at => nil,
-            :end_at => nil,
+            :start_at => '2016-09-27 00:00:00 +0900',
+            :end_at => '2016-09-28 23:59:59 +0900',
             :users => [{:id => 6, :name => "佐藤 昇"}],
             :facilities => [],
             :private => false,
@@ -132,13 +138,33 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
             :allday => false,
           }, act)
 
-        # FIXME Date of repeat type event isn't correct.
-        today = Date.today.strftime('%F')
         assert_include_event({
             :title => "Repeat everyday",
             :plan => "【会議】",
-            :start_at => "#{today} 11:00:00 +0900",
-            :end_at => "#{today} 12:30:00 +0900",
+            :start_at => "2016-09-26 11:00:00 +0900",
+            :end_at => "2016-09-26 12:30:00 +0900",
+            :users => [{:id => 6, :name => "佐藤 昇"}],
+            :facilities => [],
+            :private => false,
+            :allday => false,
+          }, act)
+
+        assert_include_event({
+            :title => "Repeat everyday",
+            :plan => "【会議】",
+            :start_at => "2016-09-27 11:00:00 +0900",
+            :end_at => "2016-09-27 12:30:00 +0900",
+            :users => [{:id => 6, :name => "佐藤 昇"}],
+            :facilities => [],
+            :private => false,
+            :allday => false,
+          }, act)
+
+        assert_include_event({
+            :title => "Repeat everyday",
+            :plan => "【会議】",
+            :start_at => "2016-09-28 11:00:00 +0900",
+            :end_at => "2016-09-28 12:30:00 +0900",
             :users => [{:id => 6, :name => "佐藤 昇"}],
             :facilities => [],
             :private => false,
@@ -148,7 +174,7 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
         assert_include_event({
             :title => "Repeat week start_only",
             :plan => nil,
-            :start_at => "#{today} 21:30:00 +0900",
+            :start_at => "2016-09-27 21:30:00 +0900",
             :end_at => nil,
             :users => [{:id => 6, :name => "佐藤 昇"}],
             :facilities => [],
@@ -159,8 +185,8 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
         assert_include_event({
             :title => "Repeat lastweek",
             :plan => nil,
-            :start_at => "#{today} 03:45:00 +0900",
-            :end_at => "#{today} 04:15:00 +0900",
+            :start_at => "2016-09-28 03:45:00 +0900",
+            :end_at => "2016-09-28 04:15:00 +0900",
             :users => [{:id => 6, :name => "佐藤 昇"}],
             :facilities => ["第一会議室"],
             :private => false,
@@ -170,8 +196,8 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
         assert_include_event({
             :title => "Repeat month",
             :plan => nil,
-            :start_at => "#{today} 16:30:00 +0900",
-            :end_at => "#{today} 17:00:00 +0900",
+            :start_at => "2016-09-28 16:30:00 +0900",
+            :end_at => "2016-09-28 17:00:00 +0900",
             :users => [{:id => 6, :name => "佐藤 昇"} ],
             :facilities => ["第一会議室"],
             :private => false,
@@ -189,8 +215,8 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
         assert_include_event({
             :title => "Allday Event",
             :plan => nil,
-            :start_at => nil,
-            :end_at => nil,
+            :start_at => '2016-09-28 00:00:00 +0900',
+            :end_at => '2016-09-28 23:59:59 +0900',
             :users => [{:id => 6, :name => "佐藤 昇"}],
             :facilities => [],
             :private => false,
@@ -200,22 +226,20 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
         assert_include_event({
             :title => "2days Event",
             :plan => nil,
-            :start_at => nil,
-            :end_at => nil,
+            :start_at => '2016-09-27 00:00:00 +0900',
+            :end_at => '2016-09-28 23:59:59 +0900',
             :users => [{:id => 6, :name => "佐藤 昇"}],
             :facilities => [],
             :private => false,
             :allday => true,
           }, act)
 
-        # FIXME Date of repeat type event isn't correct.
-        today = Date.today.strftime('%F')
         assert_include_event({
             :title => "Repeat everyday",
             :plan => "【会議】",
             :private => false,
-            :start_at => "#{today} 11:00:00 +0900",
-            :end_at => "#{today} 12:30:00 +0900",
+            :start_at => "2016-09-28 11:00:00 +0900",
+            :end_at => "2016-09-28 12:30:00 +0900",
             :users => [{:id => 6, :name => "佐藤 昇"}],
             :facilities => [],
             :allday => false,
@@ -224,8 +248,8 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
         assert_include_event({
             :title => "Repeat lastweek",
             :plan => nil,
-            :start_at => "#{today} 03:45:00 +0900",
-            :end_at => "#{today} 04:15:00 +0900",
+            :start_at => "2016-09-28 03:45:00 +0900",
+            :end_at => "2016-09-28 04:15:00 +0900",
             :users => [{:id => 6, :name => "佐藤 昇"}],
             :facilities => ["第一会議室"],
             :private => false,
@@ -235,8 +259,8 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
         assert_include_event({
             :title => "Repeat month",
             :plan => nil,
-            :start_at => "#{today} 16:30:00 +0900",
-            :end_at => "#{today} 17:00:00 +0900",
+            :start_at => "2016-09-28 16:30:00 +0900",
+            :end_at => "2016-09-28 17:00:00 +0900",
             :users => [{:id => 6, :name => "佐藤 昇"}],
             :facilities => ["第一会議室"],
             :private => false,
@@ -339,8 +363,8 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
         assert_include_event({
           title: 'Allday Event',
           plan: '社内MTG',
-          start_at: nil,
-          end_at: nil,
+          start_at: '2016-01-15 00:00:00 +0900',
+          end_at: '2016-01-15 23:59:59 +0900',
           allday: true,
           users: [
             {id: 1, name: 'Administrator'}
@@ -431,6 +455,159 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
       unless fault.nil?
         raise fault.text
       end
+    end
+  end
+
+
+  sub_test_case '.expand_dates()' do
+    service = Ragoon::Services::Schedule.new(dummy_opts)
+
+    expand_dates = lambda do |start_date, end_date, cond, exclusive_dates|
+      service.send(:expand_dates, start_date, end_date, cond, exclusive_dates)
+    end
+
+    def dates(year, month, *ranges)
+      ranges.map {|r|
+        r.respond_to?(:to_a) ? r.to_a : r
+      }.flatten.map {|d|
+        Date.new(year, month, d)
+      }
+    end
+
+    test 'type == "day"' do
+      start_date = Date.new(2016, 10, 1)
+      end_date = Date.new(2016, 10, 31)
+      exclusive_dates = dates(2016, 10, [3, 10])
+
+      cond = {type: 'day'}
+      act = expand_dates.call(start_date, end_date, cond, exclusive_dates)
+      assert_equal(dates(2016, 10, 1..2, 4..9, 11..31), act)
+    end
+
+    test 'type == "week"' do
+      start_date = Date.new(2016, 10, 1)
+      end_date = Date.new(2016, 10, 31)
+      exclusive_dates = dates(2016, 10, [9, 15])
+
+      cond = {type: 'week', week: '0'}
+      act = expand_dates.call(start_date, end_date, cond, exclusive_dates)
+      assert_equal(dates(2016, 10, [2, 16, 23, 30]), act)
+
+      cond = {type: 'week', week: '6'}
+      act = expand_dates.call(start_date, end_date, cond, exclusive_dates)
+      assert_equal(dates(2016, 10, [1, 8, 22, 29]), act)
+    end
+
+    test 'type == "weekday"' do
+      start_date = Date.new(2016, 10, 1)
+      end_date = Date.new(2016, 10, 31)
+      exclusive_dates = dates(2016, 10, [9, 12])
+
+      cond = {type: 'weekday'}
+      act = expand_dates.call(start_date, end_date, cond, exclusive_dates)
+      assert_equal(dates(2016, 10, 3..7, 10..11, 13..14, 17..21, 24..28, 31), act)
+    end
+
+    test 'type == "1stweek"' do
+      start_date = Date.new(2016, 9, 1)
+      end_date = Date.new(2016, 11, 30)
+      exclusive_dates = []
+
+      cond = {type: '1stweek', week: '2'}
+      act = expand_dates.call(start_date, end_date, cond, exclusive_dates)
+      assert_equal(dates(2016, 9, 6) + dates(2016, 10, 4) + dates(2016, 11, 1), act)
+    end
+
+    test 'type == "2ndweek"' do
+      start_date = Date.new(2016, 9, 1)
+      end_date = Date.new(2016, 11, 30)
+      exclusive_dates = []
+
+      cond = {type: '2ndweek', week: '2'}
+      act = expand_dates.call(start_date, end_date, cond, exclusive_dates)
+      assert_equal(dates(2016, 9, 13) + dates(2016, 10, 11) + dates(2016, 11, 8), act)
+    end
+
+    test 'type == "3rdweek"' do
+      start_date = Date.new(2016, 9, 1)
+      end_date = Date.new(2016, 11, 30)
+      exclusive_dates = []
+
+      cond = {type: '3rdweek', week: '2'}
+      act = expand_dates.call(start_date, end_date, cond, exclusive_dates)
+      assert_equal(dates(2016, 9, 20) + dates(2016, 10, 18) + dates(2016, 11, 15), act)
+    end
+
+    test 'type == "4thweek"' do
+      start_date = Date.new(2016, 9, 1)
+      end_date = Date.new(2016, 11, 30)
+      exclusive_dates = []
+
+      cond = {type: '4thweek', week: '2'}
+      act = expand_dates.call(start_date, end_date, cond, exclusive_dates)
+      assert_equal(dates(2016, 9, 27) + dates(2016, 10, 25) + dates(2016, 11, 22), act)
+    end
+
+    test 'type == "lastweek"' do
+      start_date = Date.new(2016, 9, 1)
+      end_date = Date.new(2016, 11, 30)
+      exclusive_dates = []
+
+      cond = {type: 'lastweek', week: '0'}
+      act = expand_dates.call(start_date, end_date, cond, exclusive_dates)
+      assert_equal(dates(2016, 9, 25) + dates(2016, 10, 30) + dates(2016, 11, 27), act)
+      cond = {type: 'lastweek', week: '2'}
+      act = expand_dates.call(start_date, end_date, cond, exclusive_dates)
+      assert_equal(dates(2016, 9, 27) + dates(2016, 10, 25) + dates(2016, 11, 29), act)
+      cond = {type: 'lastweek', week: '6'}
+      act = expand_dates.call(start_date, end_date, cond, exclusive_dates)
+      assert_equal(dates(2016, 9, 24) + dates(2016, 10, 29) + dates(2016, 11, 26), act)
+    end
+
+    test 'type == "month"' do
+      start_date = Date.new(2016, 9, 1)
+      end_date = Date.new(2016, 11, 30)
+      exclusive_dates = []
+
+      cond = {type: 'month', day: '2'}
+      act = expand_dates.call(start_date, end_date, cond, exclusive_dates)
+      assert_equal(dates(2016, 9, 2) + dates(2016, 10, 2) + dates(2016, 11, 2), act)
+    end
+  end
+
+  sub_test_case '.nth_weekday_of_month()' do
+    service = Ragoon::Services::Schedule.new(dummy_opts)
+
+    nth_weekday_of_month = lambda do |year, month, day|
+      service.send(:nth_weekday_of_month, Date.new(year, month,  day))
+    end
+
+    test '1st day of the month is Sunday' do
+      assert_equal(0, Date.new(2016, 5, 1).wday)
+      assert_equal(1, nth_weekday_of_month.call(2016, 5,  1))
+      assert_equal(1, nth_weekday_of_month.call(2016, 5,  7))
+      assert_equal(2, nth_weekday_of_month.call(2016, 5,  8))
+      assert_equal(2, nth_weekday_of_month.call(2016, 5, 14))
+      assert_equal(3, nth_weekday_of_month.call(2016, 5, 15))
+      assert_equal(3, nth_weekday_of_month.call(2016, 5, 21))
+      assert_equal(4, nth_weekday_of_month.call(2016, 5, 22))
+      assert_equal(4, nth_weekday_of_month.call(2016, 5, 28))
+      assert_equal(5, nth_weekday_of_month.call(2016, 5, 29))
+      assert_equal(5, nth_weekday_of_month.call(2016, 5, 30))
+    end
+
+    test '1st day of the month is Saturday' do
+      assert_equal(6, Date.new(2016, 10, 1).wday)
+      assert_equal(1, nth_weekday_of_month.call(2016, 10,  1))
+      assert_equal(1, nth_weekday_of_month.call(2016, 10,  7))
+      assert_equal(2, nth_weekday_of_month.call(2016, 10,  8))
+      assert_equal(2, nth_weekday_of_month.call(2016, 10, 14))
+      assert_equal(3, nth_weekday_of_month.call(2016, 10, 15))
+      assert_equal(3, nth_weekday_of_month.call(2016, 10, 21))
+      assert_equal(4, nth_weekday_of_month.call(2016, 10, 22))
+      assert_equal(4, nth_weekday_of_month.call(2016, 10, 28))
+      assert_equal(5, nth_weekday_of_month.call(2016, 10, 29))
+      assert_equal(5, nth_weekday_of_month.call(2016, 10, 31))
     end
   end
 

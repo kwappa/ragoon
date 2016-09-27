@@ -1,4 +1,5 @@
 class Ragoon::Services::Schedule < Ragoon::Services
+
   def schedule_get_events(options = {})
     action_name = 'ScheduleGetEvents'
 
@@ -16,10 +17,20 @@ class Ragoon::Services::Schedule < Ragoon::Services
 
     client.request(action_name, body_node)
 
-    events = client.result_set.xpath('//schedule_event').
-             find_all { |ev| ev[:event_type] != 'banner' }.map do |event|
-      parse_event(event)
-    end
+    events_by_type = client.result_set.xpath('//schedule_event')
+      .group_by {|ev| ev[:event_type] }
+
+    # events_by_type['banner'] does not include results
+    [
+      (events_by_type['normal'] || []).map {|event|
+        parse_event(event)
+      },
+      (events_by_type['repeat'] || []).map {|event|
+        expand_repeat_event_periods(event, options[:start], options[:end]).map {|period|
+          parse_event(event, period)
+        }
+      }
+    ].flatten
   end
 
   def schedule_add_event(options = {})
@@ -89,8 +100,9 @@ class Ragoon::Services::Schedule < Ragoon::Services
     }.first
   end
 
-  def parse_event(event)
-    period = start_and_end(event)
+  def parse_event(event, period = nil)
+    period = start_and_end(event) if period.nil?
+
     {
       id:         event[:id],
       url:        event_url(event[:id]),
@@ -129,28 +141,21 @@ class Ragoon::Services::Schedule < Ragoon::Services
   def start_and_end(event)
     start_at = nil
     end_at   = nil
+    timezone = event[:timezone]
+    end_timezone = event[:end_timezone] || event[:timezone]
 
     unless event[:allday] == 'true'
-      case event[:event_type]
-      when 'normal'
-        period = event.children.xpath('ev:datetime', ev: "http://schemas.cybozu.co.jp/schedule/2008").first
-        unless period.nil?
-          start_at = parse_event_time(period[:start])
-          unless event[:start_only] == 'true'
-            end_at = parse_event_time(period[:end])
-          end
-        end
-      when 'repeat'
-        repeat_info = event.xpath('ev:repeat_info', ev: 'http://schemas.cybozu.co.jp/schedule/2008').first
-        unless repeat_info.nil?
-          period = repeat_info.xpath('ev:condition', ev: 'http://schemas.cybozu.co.jp/schedule/2008').first
-          unless period.nil?
-            start_at = parse_event_time(period[:start_time])
-            unless event[:start_only] == 'true'
-              end_at = parse_event_time(period[:end_time])
-            end
-          end
-        end
+      period = event.xpath('ev:when/ev:datetime', ev: "http://schemas.cybozu.co.jp/schedule/2008").first
+      unless period.nil?
+        start_at = parse_event_time(period[:start], timezone)
+        end_at = parse_event_time(period[:end], end_timezone)
+      end
+
+    else
+      period = event.xpath('ev:when/ev:date', ev: "http://schemas.cybozu.co.jp/schedule/2008").first
+      unless period.nil?
+        start_at = parse_event_time(period[:start], timezone)
+        end_at = parse_event_time(period[:end] + " 23:59:59", end_timezone)
       end
     end
 
@@ -160,8 +165,16 @@ class Ragoon::Services::Schedule < Ragoon::Services
     }
   end
 
-  def parse_event_time(time)
-    Time.parse(time).localtime.to_s
+  def parse_event_time(time, timezone = ENV['TZ'], now = Time.now)
+    return nil if time.nil?
+
+    begin
+      old_timezone = ENV['TZ']
+      ENV['TZ'] = timezone
+      Time.parse(time, now).localtime.to_s
+    ensure
+      ENV['TZ'] = old_timezone
+    end
   end
 
   def default_options(action_name)
@@ -171,5 +184,73 @@ class Ragoon::Services::Schedule < Ragoon::Services
     else
       {}
     end
+  end
+
+  private
+
+  def expand_repeat_event_periods(event, start_at, end_at)
+    timezone = event[:timezone]
+    end_timezone = event[:end_timezone] || event[:timezone]
+
+    periods = []
+
+    event.xpath('ev:repeat_info/ev:condition', ev: 'http://schemas.cybozu.co.jp/schedule/2008').each do |cond|
+      exclusive_dates = event.xpath('ev:repeat_info/ev:exclusive_datetimes/ev:exclusive_datetime',
+                                    ev: 'http://schemas.cybozu.co.jp/schedule/2008').map do |exclusive_date|
+        Date.parse(exclusive_date[:start])
+      end
+
+      dates = expand_dates(start_at.to_date, end_at.to_date, cond, exclusive_dates)
+
+      periods = dates.map do |date|
+        {
+          start_at: parse_event_time(cond[:start_time], timezone, date.to_time),
+          end_at: parse_event_time(cond[:end_time], end_timezone, date.to_time)
+        }
+      end
+    end
+
+    periods
+  end
+
+  def expand_dates(start_date, end_date, cond, exclusive_dates)
+    (start_date..end_date).select {|date|
+      next false if exclusive_dates.include?(date)
+
+      case cond[:type]
+      when 'day' # everyday
+        next true
+
+      when 'week' # everyweek
+        next date.wday == cond[:week].to_i
+
+      when 'weekday'
+        next (1..5).include?(date.wday)
+
+      when '1stweek'
+        next nth_weekday_of_month(date) == 1 && date.wday == cond[:week].to_i
+
+      when '2ndweek'
+        next nth_weekday_of_month(date) == 2 && date.wday == cond[:week].to_i
+
+      when '3rdweek'
+        next nth_weekday_of_month(date) == 3 && date.wday == cond[:week].to_i
+
+      when '4thweek'
+        next nth_weekday_of_month(date) == 4 && date.wday == cond[:week].to_i
+
+      when 'lastweek'
+        next date.month != date.next_day(7).month &&
+          date.wday == cond[:week].to_i
+
+      when 'month'
+        next date.day == cond[:day].to_i
+
+      end
+    }
+  end
+
+  def nth_weekday_of_month(date)
+    (date.day + 6) / 7
   end
 end

@@ -35,4 +35,19 @@ class Ragoon::Services
     "#{endpoint.scheme}://#{endpoint.host}#{endpoint.path}"
   end
 
+  def parse_time(str)
+    return nil if str.nil?
+    Time.parse(str).localtime
+  end
+
+  def to_date_str(time)
+    return nil if time.nil?
+    time.localtime.strftime('%F')
+  end
+
+  def to_datetime_str(time)
+    return nil if time.nil?
+    time.utc.strftime('%FT%TZ')
+  end
+
 end

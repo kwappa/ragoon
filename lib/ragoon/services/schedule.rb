@@ -68,14 +68,14 @@ class Ragoon::Services::Schedule < Ragoon::Services
       if options[:allday]
         Ragoon::XML.create_node(
           'date',
-          start: options[:start_at].strftime('%F'),
-          end:   options[:end_at].strftime('%F')
+          start: to_date_str(options[:start_at]),
+          end:   to_date_str(options[:end_at])
         )
       else
         Ragoon::XML.create_node(
           'datetime',
-          start: options[:start_at].utc.strftime('%FT%T'),
-          end:   options[:end_at].utc.strftime('%FT%T')
+          start: to_datetime_str(options[:start_at]),
+          end:   to_datetime_str(options[:end_at])
         )
       end
     when_node.add_child(date_node)

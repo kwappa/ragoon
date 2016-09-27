@@ -298,8 +298,6 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
       end
 
       test_with_cassette 'add start only event' do
-        pend "can't create start only event"
-
         act = @service.schedule_add_event(
           title: 'Start only Event',
           description: '概要説明',

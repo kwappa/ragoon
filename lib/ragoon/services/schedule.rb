@@ -8,10 +8,10 @@ class Ragoon::Services::Schedule < Ragoon::Services
     body_node = Ragoon::XML.create_node(action_name)
     parameter_node = Ragoon::XML.create_node(
       'parameters',
-      start:           options[:start].strftime('%FT%T'),
-      end:             options[:end].strftime('%FT%T'),
-      start_for_daily: options[:start].localtime.strftime('%F'),
-      end_for_daily:   options[:end].localtime.strftime('%F'),
+      start:           to_datetime_str(options[:start]),
+      end:             to_datetime_str(options[:end]),
+      start_for_daily: to_date_str(options[:start]),
+      end_for_daily:   to_date_str(options[:end]),
     )
     body_node.add_child(parameter_node)
 

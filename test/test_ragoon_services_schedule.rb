@@ -269,8 +269,6 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
       end
 
       test_with_cassette 'get event within a few hours' do
-        pend "can't get any events"
-
         act = @service.schedule_get_events(
           start: Time.new(2016, 9, 26, 11, 0, 0),
           end: Time.new(2016, 9, 26, 12, 30, 0)

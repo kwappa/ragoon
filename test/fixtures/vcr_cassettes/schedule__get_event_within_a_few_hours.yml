@@ -27,8 +27,8 @@ http_interactions:
             </Security>
             <Timestamp SOAP-ENV:mustUnderstand="1" Id="id"
                        xmlns="http://schemas.xmlsoap.org/ws/2002/07/utility">
-              <Created>2016-09-27T22:23:17+09:00</Created>
-              <Expires>2016-09-28T22:23:17+09:00</Expires>
+              <Created>2016-09-27T22:38:02+09:00</Created>
+              <Expires>2016-09-28T22:38:02+09:00</Expires>
             </Timestamp>
             <Locale>jp</Locale>
           </SOAP-ENV:Header>
@@ -53,7 +53,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 27 Sep 2016 13:23:18 GMT
+      - Tue, 27 Sep 2016 13:38:03 GMT
       Server:
       - Apache
       X-Frame-Options:
@@ -65,7 +65,7 @@ http_interactions:
       X-Cybozu-User:
       - '6'
       Set-Cookie:
-      - CBSESSID=ubj72rbg0ecpbks15s641gc1a7s0n7ie; path=/; HttpOnly
+      - CBSESSID=2up90iviqn64nmao124d27601a38499k; path=/; HttpOnly
       - GRN_Account=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; Max-Age=0; path=/scripts/garoon/;
         httponly
       Connection:
@@ -88,10 +88,10 @@ http_interactions:
         dmVyc2lvbj40LjIuMzwvdmVyc2lvbj48YXBpdmVyc2lvbj4xLjYuMDwvYXBp
         dmVyc2lvbj48L3NvYXA6SGVhZGVyPgogPHNvYXA6Qm9keT48c2NoZWR1bGU6
         U2NoZWR1bGVHZXRFdmVudHNSZXNwb25zZT4KPHJldHVybnM+CiAgIDxzY2hl
-        ZHVsZV9ldmVudCBpZD0iMzkzIgogZXZlbnRfdHlwZT0icmVwZWF0IiAKIHB1
+        ZHVsZV9ldmVudCBpZD0iNDE3IgogZXZlbnRfdHlwZT0icmVwZWF0IiAKIHB1
         YmxpY190eXBlPSJwdWJsaWMiIAogcGxhbj0i44CQ5Lya6K2w44CRIgogZGV0
         YWlsPSJSZXBlYXQmI3gyMDtldmVyeWRheSIgCiBkZXNjcmlwdGlvbj0i5q+O
-        5pel5oyH5a6a44Kk44OZ44Oz44OIIiAKIHZlcnNpb249IjE0NzQ5ODI1OTci
+        5pel5oyH5a6a44Kk44OZ44Oz44OIIiAKIHZlcnNpb249IjE0NzQ5ODM0ODIi
         CiB0aW1lem9uZT0iQXNpYS9Ub2t5byIKIAogYWxsZGF5PSJmYWxzZSIgCiBz
         dGFydF9vbmx5PSJmYWxzZSIKIAogID4KIAogPG1lbWJlcnMgeG1sbnM9Imh0
         dHA6Ly9zY2hlbWFzLmN5Ym96dS5jby5qcC9zY2hlZHVsZS8yMDA4Ij4KICAg
@@ -107,5 +107,5 @@ http_interactions:
         PC9zY2hlZHVsZTpTY2hlZHVsZUdldEV2ZW50c1Jlc3BvbnNlPgogPC9zb2Fw
         OkJvZHk+Cjwvc29hcDpFbnZlbG9wZT4=
     http_version: 
-  recorded_at: Tue, 27 Sep 2016 13:23:18 GMT
+  recorded_at: Tue, 27 Sep 2016 13:38:03 GMT
 recorded_with: VCR 2.9.2

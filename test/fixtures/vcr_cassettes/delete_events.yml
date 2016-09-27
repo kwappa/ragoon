@@ -27,19 +27,19 @@ http_interactions:
             </Security>
             <Timestamp SOAP-ENV:mustUnderstand="1" Id="id"
                        xmlns="http://schemas.xmlsoap.org/ws/2002/07/utility">
-              <Created>2016-09-27T22:23:19+09:00</Created>
-              <Expires>2016-09-28T22:23:19+09:00</Expires>
+              <Created>2016-09-27T22:38:04+09:00</Created>
+              <Expires>2016-09-28T22:38:04+09:00</Expires>
             </Timestamp>
             <Locale>jp</Locale>
           </SOAP-ENV:Header>
           <SOAP-ENV:Body>
             <ScheduleRemoveEvents>
           <parameters>
-            <event_id>388</event_id>
-            <event_id>389</event_id>
-            <event_id>390</event_id>
-            <event_id>391</event_id>
-            <event_id>392</event_id>
+            <event_id>412</event_id>
+            <event_id>413</event_id>
+            <event_id>414</event_id>
+            <event_id>415</event_id>
+            <event_id>416</event_id>
           </parameters>
         </ScheduleRemoveEvents>
           </SOAP-ENV:Body>
@@ -59,7 +59,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 27 Sep 2016 13:23:19 GMT
+      - Tue, 27 Sep 2016 13:38:04 GMT
       Server:
       - Apache
       X-Frame-Options:
@@ -71,7 +71,7 @@ http_interactions:
       X-Cybozu-User:
       - '6'
       Set-Cookie:
-      - CBSESSID=2n6ggn33vj8orir1trsce12ad1u2jvqt; path=/; HttpOnly
+      - CBSESSID=le6b3tf9rhf7bvf4bqrr35igf0qu4i6p; path=/; HttpOnly
       - GRN_Account=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; Max-Age=0; path=/scripts/garoon/;
         httponly
       Connection:
@@ -93,7 +93,7 @@ http_interactions:
          <soap:Body> </soap:Body>
         </soap:Envelope>
     http_version: 
-  recorded_at: Tue, 27 Sep 2016 13:23:19 GMT
+  recorded_at: Tue, 27 Sep 2016 13:38:04 GMT
 - request:
     method: post
     uri: http://onlinedemo2.cybozu.info/scripts/garoon/grn.exe/cbpapi/schedule/api
@@ -121,18 +121,18 @@ http_interactions:
             </Security>
             <Timestamp SOAP-ENV:mustUnderstand="1" Id="id"
                        xmlns="http://schemas.xmlsoap.org/ws/2002/07/utility">
-              <Created>2016-09-27T22:23:19+09:00</Created>
-              <Expires>2016-09-28T22:23:19+09:00</Expires>
+              <Created>2016-09-27T22:38:04+09:00</Created>
+              <Expires>2016-09-28T22:38:04+09:00</Expires>
             </Timestamp>
             <Locale>jp</Locale>
           </SOAP-ENV:Header>
           <SOAP-ENV:Body>
             <ScheduleRemoveEventsFromRepeatEvent>
           <parameters>
-            <operation event_id="393" type="all"/>
-            <operation event_id="394" type="all"/>
-            <operation event_id="395" type="all"/>
-            <operation event_id="396" type="all"/>
+            <operation event_id="417" type="all"/>
+            <operation event_id="418" type="all"/>
+            <operation event_id="419" type="all"/>
+            <operation event_id="420" type="all"/>
           </parameters>
         </ScheduleRemoveEventsFromRepeatEvent>
           </SOAP-ENV:Body>
@@ -152,7 +152,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 27 Sep 2016 13:23:19 GMT
+      - Tue, 27 Sep 2016 13:38:04 GMT
       Server:
       - Apache
       X-Frame-Options:
@@ -164,7 +164,7 @@ http_interactions:
       X-Cybozu-User:
       - '6'
       Set-Cookie:
-      - CBSESSID=ie8lersg5obevodspbdg1n8e263gh82t; path=/; HttpOnly
+      - CBSESSID=sp13q7jh5sikc07bjeika8i9tiqblvdh; path=/; HttpOnly
       - GRN_Account=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; Max-Age=0; path=/scripts/garoon/;
         httponly
       Connection:
@@ -190,5 +190,5 @@ http_interactions:
          </soap:Body>
         </soap:Envelope>
     http_version: 
-  recorded_at: Tue, 27 Sep 2016 13:23:19 GMT
+  recorded_at: Tue, 27 Sep 2016 13:38:05 GMT
 recorded_with: VCR 2.9.2

@@ -1,4 +1,5 @@
 class Ragoon::Services::Schedule < Ragoon::Services
+  XML_NS = 'http://schemas.cybozu.co.jp/schedule/2008'
 
   def schedule_get_events(options = {})
     action_name = 'ScheduleGetEvents'
@@ -57,10 +58,7 @@ class Ragoon::Services::Schedule < Ragoon::Services
     )
     parameter_node.add_child(schedule_event_node)
 
-    members_node = Ragoon::XML.create_node(
-      'members',
-      xmlns: 'http://schemas.cybozu.co.jp/schedule/2008'
-    )
+    members_node = Ragoon::XML.create_node('members', xmlns: XML_NS)
     schedule_event_node.add_child(members_node)
     if options[:users]
       options[:users].each do |user|
@@ -71,10 +69,7 @@ class Ragoon::Services::Schedule < Ragoon::Services
       end
     end
 
-    when_node = Ragoon::XML.create_node(
-      'when',
-      xmlns: 'http://schemas.cybozu.co.jp/schedule/2008'
-    )
+    when_node = Ragoon::XML.create_node('when', xmlns: XML_NS)
     date_node =
       if options[:allday]
         Ragoon::XML.create_node(
@@ -122,14 +117,14 @@ class Ragoon::Services::Schedule < Ragoon::Services
   end
 
   def facility_names(event)
-    event.xpath('ev:members', ev: "http://schemas.cybozu.co.jp/schedule/2008").
-      children.map { |c| c.xpath('ev:facility', ev: "http://schemas.cybozu.co.jp/schedule/2008").first }.
+    event.xpath('ev:members', ev: XML_NS).
+      children.map { |c| c.xpath('ev:facility', ev: XML_NS).first }.
       compact.map { |n| n[:name] }
   end
 
   def users_info(event)
-    event.xpath('ev:members', ev: "http://schemas.cybozu.co.jp/schedule/2008").
-      children.map { |c| c.xpath('ev:user', ev: "http://schemas.cybozu.co.jp/schedule/2008").first }.
+    event.xpath('ev:members', ev: XML_NS).
+      children.map { |c| c.xpath('ev:user', ev: XML_NS).first }.
       compact.map do |n|
         {
           id: n[:id].to_i,
@@ -145,14 +140,14 @@ class Ragoon::Services::Schedule < Ragoon::Services
     end_timezone = event[:end_timezone] || event[:timezone]
 
     unless event[:allday] == 'true'
-      period = event.xpath('ev:when/ev:datetime', ev: "http://schemas.cybozu.co.jp/schedule/2008").first
+      period = event.xpath('ev:when/ev:datetime', ev: XML_NS).first
       unless period.nil?
         start_at = parse_event_time(period[:start], timezone)
         end_at = parse_event_time(period[:end], end_timezone)
       end
 
     else
-      period = event.xpath('ev:when/ev:date', ev: "http://schemas.cybozu.co.jp/schedule/2008").first
+      period = event.xpath('ev:when/ev:date', ev: XML_NS).first
       unless period.nil?
         start_at = parse_event_time(period[:start], timezone)
         end_at = parse_event_time(period[:end] + " 23:59:59", end_timezone)
@@ -194,9 +189,9 @@ class Ragoon::Services::Schedule < Ragoon::Services
 
     periods = []
 
-    event.xpath('ev:repeat_info/ev:condition', ev: 'http://schemas.cybozu.co.jp/schedule/2008').each do |cond|
+    event.xpath('ev:repeat_info/ev:condition', ev: XML_NS).each do |cond|
       exclusive_dates = event.xpath('ev:repeat_info/ev:exclusive_datetimes/ev:exclusive_datetime',
-                                    ev: 'http://schemas.cybozu.co.jp/schedule/2008').map do |exclusive_date|
+                                    ev: XML_NS).map do |exclusive_date|
         Date.parse(exclusive_date[:start])
       end
 

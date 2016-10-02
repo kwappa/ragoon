@@ -109,6 +109,7 @@ class Ragoon::Services::Schedule < Ragoon::Services
       users:      users_info(event),
       private:    !(event[:public_type] == 'public'),
       allday:     event[:allday] == 'true',
+      event_type: event[:event_type],
     }
   end
 

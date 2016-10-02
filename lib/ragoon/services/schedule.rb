@@ -31,7 +31,7 @@ class Ragoon::Services::Schedule < Ragoon::Services
           parse_event(event, period)
         }
       }
-    ].flatten
+    ].flatten.sort_by { |e| e[:start_at] }
   end
 
   def schedule_add_event(options = {})

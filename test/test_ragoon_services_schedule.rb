@@ -92,6 +92,7 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
             :facilities => [],
             :private => false,
             :allday => true,
+            :event_type => 'normal',
           }, act)
 
         assert_include_event({
@@ -103,6 +104,7 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
             :facilities => [],
             :private => false,
             :allday => true,
+            :event_type => 'normal',
           }, act)
 
         assert_include_event({
@@ -114,6 +116,7 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
             :facilities => [],
             :private => false,
             :allday => false,
+            :event_type => 'normal',
           }, act)
 
         assert_include_event({
@@ -125,6 +128,7 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
             :facilities => [],
             :private => false,
             :allday => false,
+            :event_type => 'normal',
           }, act)
 
         assert_include_event({
@@ -136,6 +140,7 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
             :facilities => [],
             :private => false,
             :allday => false,
+            :event_type => 'normal',
           }, act)
 
         assert_include_event({
@@ -147,6 +152,7 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
             :facilities => [],
             :private => false,
             :allday => false,
+            :event_type => 'repeat',
           }, act)
 
         assert_include_event({
@@ -158,6 +164,7 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
             :facilities => [],
             :private => false,
             :allday => false,
+            :event_type => 'repeat',
           }, act)
 
         assert_include_event({
@@ -169,6 +176,7 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
             :facilities => [],
             :private => false,
             :allday => false,
+            :event_type => 'repeat',
           }, act)
 
         assert_include_event({
@@ -180,6 +188,7 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
             :facilities => [],
             :private => false,
             :allday => false,
+            :event_type => 'repeat',
           }, act)
 
         assert_include_event({
@@ -191,6 +200,7 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
             :facilities => ["第一会議室"],
             :private => false,
             :allday => false,
+            :event_type => 'repeat',
           }, act)
 
         assert_include_event({
@@ -202,6 +212,7 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
             :facilities => ["第一会議室"],
             :private => false,
             :allday => false,
+            :event_type => 'repeat',
           }, act)
       end
 
@@ -221,6 +232,7 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
             :facilities => [],
             :private => false,
             :allday => true,
+            :event_type => 'normal',
           }, act)
 
         assert_include_event({
@@ -232,6 +244,7 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
             :facilities => [],
             :private => false,
             :allday => true,
+            :event_type => 'normal',
           }, act)
 
         assert_include_event({
@@ -243,6 +256,7 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
             :users => [{:id => 6, :name => "佐藤 昇"}],
             :facilities => [],
             :allday => false,
+            :event_type => 'repeat',
           }, act)
 
         assert_include_event({
@@ -254,6 +268,7 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
             :facilities => ["第一会議室"],
             :private => false,
             :allday => false,
+            :event_type => 'repeat',
           }, act)
 
         assert_include_event({
@@ -265,6 +280,7 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
             :facilities => ["第一会議室"],
             :private => false,
             :allday => false,
+            :event_type => 'repeat',
           }, act)
       end
 
@@ -285,6 +301,7 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
             :users => [{:id => 6, :name => "佐藤 昇"}],
             :facilities => [],
             :allday => false,
+            :event_type => 'repeat',
           }, act)
 
       end
@@ -301,7 +318,8 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
           end_at: Time.new(2016, 1, 15, 13, 30),
           users: [ 1 ],
           private: false,
-          allday: false
+          allday: false,
+          event_type: 'normal',
         )
 
         assert_all_urls_of_events(event_url_base, act)
@@ -311,6 +329,7 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
           start_at: '2016-01-15 13:00:00 +0900',
           end_at: '2016-01-15 13:30:00 +0900',
           allday: false,
+          event_type: 'normal',
           users: [
             {id: 1, name: 'Administrator'}
           ],
@@ -327,7 +346,8 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
           plan: '社内MTG',
           users: [1],
           private: false,
-          allday: false
+          allday: false,
+          event_type: 'normal',
         )
 
         assert_all_urls_of_events(event_url_base, act)
@@ -337,6 +357,7 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
           start_at: '2016-01-15 21:00:00 +0900',
           end_at: nil,
           allday: false,
+          event_type: 'normal',
           users: [
             {id: 1, name: 'Administrator'}
           ],
@@ -354,7 +375,8 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
           plan: '社内MTG',
           users: [ 1 ],
           private: false,
-          allday: true
+          allday: true,
+          event_type: 'normal',
         )
 
         assert_all_urls_of_events(event_url_base, act)
@@ -364,6 +386,7 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
           start_at: '2016-01-15 00:00:00 +0900',
           end_at: '2016-01-15 23:59:59 +0900',
           allday: true,
+          event_type: 'normal',
           users: [
             {id: 1, name: 'Administrator'}
           ],
@@ -608,6 +631,4 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
       assert_equal(5, nth_weekday_of_month.call(2016, 10, 31))
     end
   end
-
 end
-

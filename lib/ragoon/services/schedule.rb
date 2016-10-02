@@ -31,7 +31,7 @@ class Ragoon::Services::Schedule < Ragoon::Services
           parse_event(event, period)
         }
       }
-    ].flatten
+    ].flatten.sort_by { |e| e[:start_at] }
   end
 
   def schedule_add_event(options = {})
@@ -109,6 +109,7 @@ class Ragoon::Services::Schedule < Ragoon::Services
       users:      users_info(event),
       private:    !(event[:public_type] == 'public'),
       allday:     event[:allday] == 'true',
+      event_type: event[:event_type],
     }
   end
 

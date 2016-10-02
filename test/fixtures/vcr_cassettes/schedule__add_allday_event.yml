@@ -1,0 +1,119 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://onlinedemo2.cybozu.info/scripts/garoon/grn.exe/cbpapi/schedule/api
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://www.w3.org/2003/05/soap-envelope"
+                           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                           xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+                           xmlns:base_services="http://wsdl.cybozu.co.jp/base/2008">
+          <SOAP-ENV:Header>
+            <Action SOAP-ENV:mustUnderstand="1"
+                    xmlns="http://schemas.xmlsoap.org/ws/2003/03/addressing">
+              ScheduleAddEvents
+            </Action>
+            <Security xmlns:wsu="http://schemas.xmlsoap.org/ws/2002/07/utility"
+                      SOAP-ENV:mustUnderstand="1"
+                      xmlns="http://schemas.xmlsoap.org/ws/2002/12/secext">
+              <UsernameToken wsu:Id="id">
+                <Username>sato</Username>
+                <Password>sato</Password>
+              </UsernameToken>
+            </Security>
+            <Timestamp SOAP-ENV:mustUnderstand="1" Id="id"
+                       xmlns="http://schemas.xmlsoap.org/ws/2002/07/utility">
+              <Created>2016-09-27T22:38:00+09:00</Created>
+              <Expires>2016-09-28T22:38:00+09:00</Expires>
+            </Timestamp>
+            <Locale>jp</Locale>
+          </SOAP-ENV:Header>
+          <SOAP-ENV:Body>
+            <ScheduleAddEvents>
+          <parameters>
+            <schedule_event xmlns="" id="dummy" version="dummy" event_type="normal" plan="&#x793E;&#x5185;MTG" detail="Allday Event" description="&#x6982;&#x8981;&#x8AAC;&#x660E;" public_type="public">
+              <members xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+                <member>
+                  <user id="1"/>
+                </member>
+              </members>
+              <when xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+                <date start="2016-01-15" end="2016-01-15"/>
+              </when>
+            </schedule_event>
+          </parameters>
+        </ScheduleAddEvents>
+          </SOAP-ENV:Body>
+        </SOAP-ENV:Envelope>
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      Content-Length:
+      - '1805'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 27 Sep 2016 13:38:01 GMT
+      Server:
+      - Apache
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      X-Cybozu-Forward:
+      - '1'
+      X-Cybozu-User:
+      - '6'
+      Set-Cookie:
+      - CBSESSID=svnnc6u3ns8glefhc3d7tvvp5drl77j2; path=/; HttpOnly
+      - GRN_Account=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; Max-Age=0; path=/scripts/garoon/;
+        httponly
+      Connection:
+      - close
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/soap+xml; charset="utf-8"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHNvYXA6
+        RW52ZWxvcGUKIHhtbG5zOnNvYXA9Imh0dHA6Ly93d3cudzMub3JnLzIwMDMv
+        MDUvc29hcC1lbnZlbG9wZSIKIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5v
+        cmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiCiB4bWxuczp4c2Q9Imh0dHA6
+        Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hIgogeG1sbnM6c2NoZWR1bGU9
+        Imh0dHA6Ly93c2RsLmN5Ym96dS5jby5qcC9zY2hlZHVsZS8yMDA4Ij4KIDxz
+        b2FwOkhlYWRlcj48dmVuZG9yPkN5Ym96dTwvdmVuZG9yPjxwcm9kdWN0Pkdh
+        cm9vbjwvcHJvZHVjdD48cHJvZHVjdF90eXBlPjE8L3Byb2R1Y3RfdHlwZT48
+        dmVyc2lvbj40LjIuMzwvdmVyc2lvbj48YXBpdmVyc2lvbj4xLjYuMDwvYXBp
+        dmVyc2lvbj48L3NvYXA6SGVhZGVyPgogPHNvYXA6Qm9keT48c2NoZWR1bGU6
+        U2NoZWR1bGVBZGRFdmVudHNSZXNwb25zZT4KPHJldHVybnM+CiAgIDxzY2hl
+        ZHVsZV9ldmVudCBpZD0iNDA5IgogZXZlbnRfdHlwZT0ibm9ybWFsIiAKIHB1
+        YmxpY190eXBlPSJwdWJsaWMiIAogcGxhbj0i56S+5YaFTVRHIgogZGV0YWls
+        PSJBbGxkYXkmI3gyMDtFdmVudCIgCiBkZXNjcmlwdGlvbj0i5qaC6KaB6Kqs
+        5piOIiAKIHZlcnNpb249IjE0NzQ5ODM0ODEiCiB0aW1lem9uZT0iQXNpYS9U
+        b2t5byIKIGVuZF90aW1lem9uZT0iQXNpYS9Ub2t5byIKIGFsbGRheT0idHJ1
+        ZSIgCiBzdGFydF9vbmx5PSJmYWxzZSIKIAogID4KIAogPG1lbWJlcnMgeG1s
+        bnM9Imh0dHA6Ly9zY2hlbWFzLmN5Ym96dS5jby5qcC9zY2hlZHVsZS8yMDA4
+        Ij4KICAgPG1lbWJlcj4KIDx1c2VyIGlkPSIxIiBuYW1lPSJBZG1pbmlzdHJh
+        dG9yIiBvcmRlcj0iMCIvPgogPC9tZW1iZXI+CiAgICAgPC9tZW1iZXJzPgog
+        CiAKICAKIAogIAogIAogIDx3aGVuIHhtbG5zPSJodHRwOi8vc2NoZW1hcy5j
+        eWJvenUuY28uanAvc2NoZWR1bGUvMjAwOCI+CiAgPGRhdGUgc3RhcnQ9IjIw
+        MTYtMDEtMTUiIGVuZD0iMjAxNi0wMS0xNSIgLz4KICA8L3doZW4+CiAgCiAK
+        ICAgICAKIDwvc2NoZWR1bGVfZXZlbnQ+IDwvcmV0dXJucz4KPC9zY2hlZHVs
+        ZTpTY2hlZHVsZUFkZEV2ZW50c1Jlc3BvbnNlPgogPC9zb2FwOkJvZHk+Cjwv
+        c29hcDpFbnZlbG9wZT4=
+    http_version: 
+  recorded_at: Tue, 27 Sep 2016 13:38:01 GMT
+recorded_with: VCR 2.9.2

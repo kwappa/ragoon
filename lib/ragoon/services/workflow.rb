@@ -14,7 +14,7 @@ class Ragoon::Services::Workflow < Ragoon::Services
     options[:request_form_id] = request_form_id
     [ :start_request_date, :end_request_date,
       :start_approval_date, :end_approval_date ].each do |key|
-      options[key] = to_datetime(options[key]) if options.has_key?(key)
+      options[key] = to_datetime_str(options[key]) if options.has_key?(key)
     end
 
     body_node = Ragoon::XML.create_node(action_name)
@@ -119,8 +119,8 @@ class Ragoon::Services::Workflow < Ragoon::Services
     body_node = Ragoon::XML.create_node(action_name)
 
     attributes = {}
-    attributes['start'] = to_datetime(start_date) unless start_date.nil?
-    attributes['end'] = to_datetime(end_date) unless end_date.nil?
+    attributes['start'] = to_datetime_str(start_date) unless start_date.nil?
+    attributes['end'] = to_datetime_str(end_date) unless end_date.nil?
     parameter_node = Ragoon::XML.create_node('parameters', attributes)
     body_node.add_child(parameter_node)
 
@@ -207,14 +207,6 @@ class Ragoon::Services::Workflow < Ragoon::Services
         }
       }
     }
-  end
-
-  def parse_time(time)
-    Time.parse(time).localtime
-  end
-
-  def to_datetime(str)
-    str.utc.strftime('%FT%TZ')
   end
 
 end

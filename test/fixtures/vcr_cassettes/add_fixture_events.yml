@@ -1,0 +1,343 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://onlinedemo2.cybozu.info/scripts/garoon/grn.exe/cbpapi/schedule/api
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://www.w3.org/2003/05/soap-envelope"
+                           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                           xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+                           xmlns:base_services="http://wsdl.cybozu.co.jp/base/2008">
+          <SOAP-ENV:Header>
+            <Action SOAP-ENV:mustUnderstand="1"
+                    xmlns="http://schemas.xmlsoap.org/ws/2003/03/addressing">
+              ScheduleAddEvents
+            </Action>
+            <Security xmlns:wsu="http://schemas.xmlsoap.org/ws/2002/07/utility"
+                      SOAP-ENV:mustUnderstand="1"
+                      xmlns="http://schemas.xmlsoap.org/ws/2002/12/secext">
+              <UsernameToken wsu:Id="id">
+                <Username>sato</Username>
+                <Password>sato</Password>
+              </UsernameToken>
+            </Security>
+            <Timestamp SOAP-ENV:mustUnderstand="1" Id="id"
+                       xmlns="http://schemas.xmlsoap.org/ws/2002/07/utility">
+              <Created>2016-09-27T22:38:02+09:00</Created>
+              <Expires>2016-09-28T22:38:02+09:00</Expires>
+            </Timestamp>
+            <Locale>jp</Locale>
+          </SOAP-ENV:Header>
+          <SOAP-ENV:Body>
+            <ScheduleAddEvents>
+          <parameters><!--
+
+        # FIXTURE EVENTS IN CALENDAR
+
+        ## 9/26
+        11:00-12:30 Repeat everyday
+        20:00-09/27 Normal 2days Event
+
+        ## 9/27
+        *********** 2days Event
+        09/26-10:30 Normal 2days Event
+        11:00-12:30 Repeat everyday
+        12:00-14:15 Normal Event
+        21:30-      Repeat week start_only
+        22:00-      Start only Event
+
+        ## 9/28
+        *********** Allday Event
+        *********** 2days Event
+        03:45-04:15 Repeat lastweek
+        11:00-12:30 Repeat everyday
+        16:30-17:00 Repeat month
+
+        -->
+
+        <!-- nomal, allday -->
+        <schedule_event id="dummy" version="dummy" event_type="normal" public_type="public" detail="Allday Event" timezone="Asia/Tokyo" end_timezone="Asia/Tokyo" allday="true" start_only="false">
+          <members xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+            <member><user id="6"/></member>
+          </members>
+          <when xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+            <date start="2016-09-28" end="2016-09-28"/>
+          </when>
+        </schedule_event>
+
+        <!-- nomal, allday, 2days -->
+        <schedule_event id="dummy" version="dummy" event_type="normal" public_type="public" detail="2days Event" timezone="Asia/Tokyo" end_timezone="Asia/Tokyo" allday="true" start_only="false">
+          <members xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+            <member><user id="6"/></member>
+          </members>
+          <when xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+            <date start="2016-09-27" end="2016-09-28"/>
+          </when>
+        </schedule_event>
+
+        <!-- nomal, startonly -->
+        <schedule_event id="dummy" version="dummy" event_type="normal" public_type="public" detail="Start only Event" timezone="Asia/Tokyo" end_timezone="Asia/Tokyo" allday="false" start_only="true">
+          <members xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+            <member><user id="6"/></member>
+          </members>
+          <when xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+            <datetime start="2016-09-27T13:00:00Z"/> <!-- 22:00 JST -->
+          </when>
+        </schedule_event>
+
+        <!-- nomal -->
+        <schedule_event id="dummy" version="dummy" event_type="normal" public_type="public" detail="Normal Event" timezone="Asia/Tokyo" end_timezone="Asia/Tokyo" allday="false" start_only="false">
+          <members xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+            <member><user id="6"/></member>
+            <member><facility id="1"/></member>
+          </members>
+          <when xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+            <datetime start="2016-09-27T03:00:00Z" end="2016-09-27T05:15:00Z"/> <!-- 12:00-14:15 JST -->
+          </when>
+        </schedule_event>
+
+        <!-- nomal, 2days -->
+        <schedule_event id="dummy" version="dummy" event_type="normal" public_type="public" detail="Normal 2days Event" timezone="Asia/Tokyo" end_timezone="Asia/Tokyo" allday="false" start_only="false">
+          <members xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+            <member><user id="6"/></member>
+          </members>
+          <when xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+            <datetime start="2016-09-26T11:00:00Z" end="2016-09-27T01:30:00Z"/> <!-- 26T20:00-27T10:30 JST -->
+          </when>
+        </schedule_event>
+
+        <!-- repeat, everyday -->
+        <schedule_event id="dummy" version="dummy" event_type="repeat" public_type="public" plan="&#x3010;&#x4F1A;&#x8B70;&#x3011;" detail="Repeat everyday" description="&#x6BCE;&#x65E5;&#x6307;&#x5B9A;&#x30A4;&#x30D9;&#x30F3;&#x30C8;" timezone="Asia/Tokyo" allday="false" start_only="false">
+          <members xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+            <member><user id="6"/></member>
+          </members>
+          <repeat_info xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+            <condition type="day" start_date="2016-09-20" end_date="2016-10-02" start_time="11:00:00" end_time="12:30:00"/>
+          </repeat_info>
+        </schedule_event>
+
+        <!-- repeat, week, start_only -->
+        <schedule_event id="dummy" version="dummy" event_type="repeat" public_type="public" detail="Repeat week start_only" timezone="Asia/Tokyo" allday="false" start_only="true">
+          <members xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+            <member><user id="6"/></member>
+          </members>
+          <repeat_info xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+            <condition type="week" week="2" start_date="2016-09-01" end_date="2016-12-28" start_time="21:30:00"/>
+            <exclusive_datetimes>
+            </exclusive_datetimes>
+          </repeat_info>
+        </schedule_event>
+
+        <!-- repeat, lastweek -->
+        <schedule_event id="dummy" version="dummy" event_type="repeat" public_type="public" detail="Repeat lastweek" timezone="Asia/Tokyo" allday="false" start_only="false">
+          <members xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+            <member><user id="6"/></member>
+            <member><facility id="4"/></member>
+          </members>
+          <repeat_info xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+            <condition type="lastweek" week="3" start_date="2016-09-01" end_date="2016-12-28" start_time="03:45:00" end_time="04:15:00"/>
+            <exclusive_datetimes>
+            </exclusive_datetimes>
+          </repeat_info>
+        </schedule_event>
+
+        <!-- repeat, month -->
+        <schedule_event id="dummy" version="dummy" event_type="repeat" public_type="public" detail="Repeat month" timezone="Asia/Tokyo" allday="false" start_only="false">
+          <members xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+            <member><user id="6"/></member>
+            <member><facility id="4"/></member>
+          </members>
+          <repeat_info xmlns="http://schemas.cybozu.co.jp/schedule/2008">
+            <condition type="month" day="28" start_date="2016-09-01" end_date="2016-12-28" start_time="16:30:00" end_time="17:00:00"/>
+            <exclusive_datetimes>
+            </exclusive_datetimes>
+          </repeat_info>
+        </schedule_event>
+
+        </parameters>
+        </ScheduleAddEvents>
+          </SOAP-ENV:Body>
+        </SOAP-ENV:Envelope>
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      Content-Length:
+      - '6670'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 27 Sep 2016 13:38:02 GMT
+      Server:
+      - Apache
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      X-Cybozu-Forward:
+      - '1'
+      X-Cybozu-User:
+      - '6'
+      Set-Cookie:
+      - CBSESSID=plnshas985sfs38jp3qjnsqcjjf5qmo4; path=/; HttpOnly
+      - GRN_Account=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; Max-Age=0; path=/scripts/garoon/;
+        httponly
+      Connection:
+      - close
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/soap+xml; charset="utf-8"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHNvYXA6
+        RW52ZWxvcGUKIHhtbG5zOnNvYXA9Imh0dHA6Ly93d3cudzMub3JnLzIwMDMv
+        MDUvc29hcC1lbnZlbG9wZSIKIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5v
+        cmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiCiB4bWxuczp4c2Q9Imh0dHA6
+        Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hIgogeG1sbnM6c2NoZWR1bGU9
+        Imh0dHA6Ly93c2RsLmN5Ym96dS5jby5qcC9zY2hlZHVsZS8yMDA4Ij4KIDxz
+        b2FwOkhlYWRlcj48dmVuZG9yPkN5Ym96dTwvdmVuZG9yPjxwcm9kdWN0Pkdh
+        cm9vbjwvcHJvZHVjdD48cHJvZHVjdF90eXBlPjE8L3Byb2R1Y3RfdHlwZT48
+        dmVyc2lvbj40LjIuMzwvdmVyc2lvbj48YXBpdmVyc2lvbj4xLjYuMDwvYXBp
+        dmVyc2lvbj48L3NvYXA6SGVhZGVyPgogPHNvYXA6Qm9keT48c2NoZWR1bGU6
+        U2NoZWR1bGVBZGRFdmVudHNSZXNwb25zZT4KPHJldHVybnM+CiAgIDxzY2hl
+        ZHVsZV9ldmVudCBpZD0iNDEyIgogZXZlbnRfdHlwZT0ibm9ybWFsIiAKIHB1
+        YmxpY190eXBlPSJwdWJsaWMiIAogCiBkZXRhaWw9IkFsbGRheSYjeDIwO0V2
+        ZW50IiAKICAKIHZlcnNpb249IjE0NzQ5ODM0ODIiCiB0aW1lem9uZT0iQXNp
+        YS9Ub2t5byIKIGVuZF90aW1lem9uZT0iQXNpYS9Ub2t5byIKIGFsbGRheT0i
+        dHJ1ZSIgCiBzdGFydF9vbmx5PSJmYWxzZSIKIAogID4KIAogPG1lbWJlcnMg
+        eG1sbnM9Imh0dHA6Ly9zY2hlbWFzLmN5Ym96dS5jby5qcC9zY2hlZHVsZS8y
+        MDA4Ij4KICAgPG1lbWJlcj4KIDx1c2VyIGlkPSI2IiBuYW1lPSLkvZDol6Qm
+        I3gyMDvmmIciIG9yZGVyPSIwIi8+CiA8L21lbWJlcj4KICAgICA8L21lbWJl
+        cnM+CiAKIAogIAogCiAgCiAgCiAgPHdoZW4geG1sbnM9Imh0dHA6Ly9zY2hl
+        bWFzLmN5Ym96dS5jby5qcC9zY2hlZHVsZS8yMDA4Ij4KICA8ZGF0ZSBzdGFy
+        dD0iMjAxNi0wOS0yOCIgZW5kPSIyMDE2LTA5LTI4IiAvPgogIDwvd2hlbj4K
+        ICAKIAogICAgIAogPC9zY2hlZHVsZV9ldmVudD4gICA8c2NoZWR1bGVfZXZl
+        bnQgaWQ9IjQxMyIKIGV2ZW50X3R5cGU9Im5vcm1hbCIgCiBwdWJsaWNfdHlw
+        ZT0icHVibGljIiAKIAogZGV0YWlsPSIyZGF5cyYjeDIwO0V2ZW50IiAKICAK
+        IHZlcnNpb249IjE0NzQ5ODM0ODIiCiB0aW1lem9uZT0iQXNpYS9Ub2t5byIK
+        IGVuZF90aW1lem9uZT0iQXNpYS9Ub2t5byIKIGFsbGRheT0idHJ1ZSIgCiBz
+        dGFydF9vbmx5PSJmYWxzZSIKIAogID4KIAogPG1lbWJlcnMgeG1sbnM9Imh0
+        dHA6Ly9zY2hlbWFzLmN5Ym96dS5jby5qcC9zY2hlZHVsZS8yMDA4Ij4KICAg
+        PG1lbWJlcj4KIDx1c2VyIGlkPSI2IiBuYW1lPSLkvZDol6QmI3gyMDvmmIci
+        IG9yZGVyPSIwIi8+CiA8L21lbWJlcj4KICAgICA8L21lbWJlcnM+CiAKIAog
+        IAogCiAgCiAgCiAgPHdoZW4geG1sbnM9Imh0dHA6Ly9zY2hlbWFzLmN5Ym96
+        dS5jby5qcC9zY2hlZHVsZS8yMDA4Ij4KICA8ZGF0ZSBzdGFydD0iMjAxNi0w
+        OS0yNyIgZW5kPSIyMDE2LTA5LTI4IiAvPgogIDwvd2hlbj4KICAKIAogICAg
+        IAogPC9zY2hlZHVsZV9ldmVudD4gICA8c2NoZWR1bGVfZXZlbnQgaWQ9IjQx
+        NCIKIGV2ZW50X3R5cGU9Im5vcm1hbCIgCiBwdWJsaWNfdHlwZT0icHVibGlj
+        IiAKIAogZGV0YWlsPSJTdGFydCYjeDIwO29ubHkmI3gyMDtFdmVudCIgCiAg
+        CiB2ZXJzaW9uPSIxNDc0OTgzNDgyIgogdGltZXpvbmU9IkFzaWEvVG9reW8i
+        CiBlbmRfdGltZXpvbmU9IkFzaWEvVG9reW8iCiBhbGxkYXk9ImZhbHNlIiAK
+        IHN0YXJ0X29ubHk9InRydWUiCiAKICA+CiAKIDxtZW1iZXJzIHhtbG5zPSJo
+        dHRwOi8vc2NoZW1hcy5jeWJvenUuY28uanAvc2NoZWR1bGUvMjAwOCI+CiAg
+        IDxtZW1iZXI+CiA8dXNlciBpZD0iNiIgbmFtZT0i5L2Q6JekJiN4MjA75piH
+        IiBvcmRlcj0iMCIvPgogPC9tZW1iZXI+CiAgICAgPC9tZW1iZXJzPgogCiAK
+        ICAKIAogIAogIAogIDx3aGVuIHhtbG5zPSJodHRwOi8vc2NoZW1hcy5jeWJv
+        enUuY28uanAvc2NoZWR1bGUvMjAwOCI+CiAgIDxkYXRldGltZSBzdGFydD0i
+        MjAxNi0wOS0yN1QxMzowMDowMFoiIC8+CiAgIDwvd2hlbj4KICAKIAogICAg
+        IAogPC9zY2hlZHVsZV9ldmVudD4gICA8c2NoZWR1bGVfZXZlbnQgaWQ9IjQx
+        NSIKIGV2ZW50X3R5cGU9Im5vcm1hbCIgCiBwdWJsaWNfdHlwZT0icHVibGlj
+        IiAKIAogZGV0YWlsPSJOb3JtYWwmI3gyMDtFdmVudCIgCiAgCiB2ZXJzaW9u
+        PSIxNDc0OTgzNDgyIgogdGltZXpvbmU9IkFzaWEvVG9reW8iCiBlbmRfdGlt
+        ZXpvbmU9IkFzaWEvVG9reW8iCiBhbGxkYXk9ImZhbHNlIiAKIHN0YXJ0X29u
+        bHk9ImZhbHNlIgogCiAgPgogCiA8bWVtYmVycyB4bWxucz0iaHR0cDovL3Nj
+        aGVtYXMuY3lib3p1LmNvLmpwL3NjaGVkdWxlLzIwMDgiPgogICA8bWVtYmVy
+        PgogPHVzZXIgaWQ9IjYiIG5hbWU9IuS9kOiXpCYjeDIwO+aYhyIgb3JkZXI9
+        IjAiLz4KIDwvbWVtYmVyPgogICAgIDwvbWVtYmVycz4KIAogCiAgCiAKICAK
+        ICAKICA8d2hlbiB4bWxucz0iaHR0cDovL3NjaGVtYXMuY3lib3p1LmNvLmpw
+        L3NjaGVkdWxlLzIwMDgiPgogICA8ZGF0ZXRpbWUgc3RhcnQ9IjIwMTYtMDkt
+        MjdUMDM6MDA6MDBaIiBlbmQ9IjIwMTYtMDktMjdUMDU6MTU6MDBaIi8+CiAg
+        IDwvd2hlbj4KICAKIAogICAgIAogPC9zY2hlZHVsZV9ldmVudD4gICA8c2No
+        ZWR1bGVfZXZlbnQgaWQ9IjQxNiIKIGV2ZW50X3R5cGU9Im5vcm1hbCIgCiBw
+        dWJsaWNfdHlwZT0icHVibGljIiAKIAogZGV0YWlsPSJOb3JtYWwmI3gyMDsy
+        ZGF5cyYjeDIwO0V2ZW50IiAKICAKIHZlcnNpb249IjE0NzQ5ODM0ODIiCiB0
+        aW1lem9uZT0iQXNpYS9Ub2t5byIKIGVuZF90aW1lem9uZT0iQXNpYS9Ub2t5
+        byIKIGFsbGRheT0iZmFsc2UiIAogc3RhcnRfb25seT0iZmFsc2UiCiAKICA+
+        CiAKIDxtZW1iZXJzIHhtbG5zPSJodHRwOi8vc2NoZW1hcy5jeWJvenUuY28u
+        anAvc2NoZWR1bGUvMjAwOCI+CiAgIDxtZW1iZXI+CiA8dXNlciBpZD0iNiIg
+        bmFtZT0i5L2Q6JekJiN4MjA75piHIiBvcmRlcj0iMCIvPgogPC9tZW1iZXI+
+        CiAgICAgPC9tZW1iZXJzPgogCiAKICAKIAogIAogIAogIDx3aGVuIHhtbG5z
+        PSJodHRwOi8vc2NoZW1hcy5jeWJvenUuY28uanAvc2NoZWR1bGUvMjAwOCI+
+        CiAgIDxkYXRldGltZSBzdGFydD0iMjAxNi0wOS0yNlQxMTowMDowMFoiIGVu
+        ZD0iMjAxNi0wOS0yN1QwMTozMDowMFoiLz4KICAgPC93aGVuPgogIAogCiAg
+        ICAgCiA8L3NjaGVkdWxlX2V2ZW50PiAgIDxzY2hlZHVsZV9ldmVudCBpZD0i
+        NDE3IgogZXZlbnRfdHlwZT0icmVwZWF0IiAKIHB1YmxpY190eXBlPSJwdWJs
+        aWMiIAogcGxhbj0i44CQ5Lya6K2w44CRIgogZGV0YWlsPSJSZXBlYXQmI3gy
+        MDtldmVyeWRheSIgCiBkZXNjcmlwdGlvbj0i5q+O5pel5oyH5a6a44Kk44OZ
+        44Oz44OIIiAKIHZlcnNpb249IjE0NzQ5ODM0ODIiCiB0aW1lem9uZT0iQXNp
+        YS9Ub2t5byIKIAogYWxsZGF5PSJmYWxzZSIgCiBzdGFydF9vbmx5PSJmYWxz
+        ZSIKIAogID4KIAogPG1lbWJlcnMgeG1sbnM9Imh0dHA6Ly9zY2hlbWFzLmN5
+        Ym96dS5jby5qcC9zY2hlZHVsZS8yMDA4Ij4KICAgPG1lbWJlcj4KIDx1c2Vy
+        IGlkPSI2IiBuYW1lPSLkvZDol6QmI3gyMDvmmIciIG9yZGVyPSIwIi8+CiA8
+        L21lbWJlcj4KICAgICA8L21lbWJlcnM+CiAKIAogIAogCiAgCiAgPHJlcGVh
+        dF9pbmZvIHhtbG5zPSJodHRwOi8vc2NoZW1hcy5jeWJvenUuY28uanAvc2No
+        ZWR1bGUvMjAwOCI+CiA8Y29uZGl0aW9uIHR5cGU9ImRheSIgZGF5PSIwIiAK
+        IHdlZWs9IjAiIHN0YXJ0X2RhdGU9IjIwMTYtMDktMjAiIGVuZF9kYXRlPSIy
+        MDE2LTEwLTAyIgogc3RhcnRfdGltZT0iMTE6MDA6MDAiIGVuZF90aW1lPSIx
+        MjozMDowMCIvPgogPGV4Y2x1c2l2ZV9kYXRldGltZXM+CiAgPC9leGNsdXNp
+        dmVfZGF0ZXRpbWVzPgogPC9yZXBlYXRfaW5mbz4KICAKICAgIAogCiAgIAog
+        PC9zY2hlZHVsZV9ldmVudD4gICA8c2NoZWR1bGVfZXZlbnQgaWQ9IjQxOCIK
+        IGV2ZW50X3R5cGU9InJlcGVhdCIgCiBwdWJsaWNfdHlwZT0icHVibGljIiAK
+        IAogZGV0YWlsPSJSZXBlYXQmI3gyMDt3ZWVrJiN4MjA7c3RhcnRfb25seSIg
+        CiAgCiB2ZXJzaW9uPSIxNDc0OTgzNDgyIgogdGltZXpvbmU9IkFzaWEvVG9r
+        eW8iCiAKIGFsbGRheT0iZmFsc2UiIAogc3RhcnRfb25seT0idHJ1ZSIKIAog
+        ID4KIAogPG1lbWJlcnMgeG1sbnM9Imh0dHA6Ly9zY2hlbWFzLmN5Ym96dS5j
+        by5qcC9zY2hlZHVsZS8yMDA4Ij4KICAgPG1lbWJlcj4KIDx1c2VyIGlkPSI2
+        IiBuYW1lPSLkvZDol6QmI3gyMDvmmIciIG9yZGVyPSIwIi8+CiA8L21lbWJl
+        cj4KICAgICA8L21lbWJlcnM+CiAKIAogIAogCiAgCiAgPHJlcGVhdF9pbmZv
+        IHhtbG5zPSJodHRwOi8vc2NoZW1hcy5jeWJvenUuY28uanAvc2NoZWR1bGUv
+        MjAwOCI+CiA8Y29uZGl0aW9uIHR5cGU9IndlZWsiIGRheT0iMCIgCiB3ZWVr
+        PSIyIiBzdGFydF9kYXRlPSIyMDE2LTA5LTAxIiBlbmRfZGF0ZT0iMjAxNi0x
+        Mi0yOCIKIHN0YXJ0X3RpbWU9IjIxOjMwOjAwIiAvPgogPGV4Y2x1c2l2ZV9k
+        YXRldGltZXM+CiAgPC9leGNsdXNpdmVfZGF0ZXRpbWVzPgogPC9yZXBlYXRf
+        aW5mbz4KICAKICAgIAogCiAgIAogPC9zY2hlZHVsZV9ldmVudD4gICA8c2No
+        ZWR1bGVfZXZlbnQgaWQ9IjQxOSIKIGV2ZW50X3R5cGU9InJlcGVhdCIgCiBw
+        dWJsaWNfdHlwZT0icHVibGljIiAKIAogZGV0YWlsPSJSZXBlYXQmI3gyMDts
+        YXN0d2VlayIgCiAgCiB2ZXJzaW9uPSIxNDc0OTgzNDgyIgogdGltZXpvbmU9
+        IkFzaWEvVG9reW8iCiAKIGFsbGRheT0iZmFsc2UiIAogc3RhcnRfb25seT0i
+        ZmFsc2UiCiAKICA+CiAKIDxtZW1iZXJzIHhtbG5zPSJodHRwOi8vc2NoZW1h
+        cy5jeWJvenUuY28uanAvc2NoZWR1bGUvMjAwOCI+CiAgIDxtZW1iZXI+CiA8
+        dXNlciBpZD0iNiIgbmFtZT0i5L2Q6JekJiN4MjA75piHIiBvcmRlcj0iMCIv
+        PgogPC9tZW1iZXI+CiAgICAgIDxtZW1iZXI+CiA8ZmFjaWxpdHkgaWQ9IjQi
+        IG5hbWU9IuesrOS4gOS8muitsOWupCIgb3JkZXI9IjEiLz4KIDwvbWVtYmVy
+        PgogICA8L21lbWJlcnM+CiAKIAogIAogCiAgCiAgPHJlcGVhdF9pbmZvIHht
+        bG5zPSJodHRwOi8vc2NoZW1hcy5jeWJvenUuY28uanAvc2NoZWR1bGUvMjAw
+        OCI+CiA8Y29uZGl0aW9uIHR5cGU9Imxhc3R3ZWVrIiBkYXk9IjAiIAogd2Vl
+        az0iMyIgc3RhcnRfZGF0ZT0iMjAxNi0wOS0wMSIgZW5kX2RhdGU9IjIwMTYt
+        MTItMjgiCiBzdGFydF90aW1lPSIwMzo0NTowMCIgZW5kX3RpbWU9IjA0OjE1
+        OjAwIi8+CiA8ZXhjbHVzaXZlX2RhdGV0aW1lcz4KICA8L2V4Y2x1c2l2ZV9k
+        YXRldGltZXM+CiA8L3JlcGVhdF9pbmZvPgogIAogICAgCiAKICAgCiA8L3Nj
+        aGVkdWxlX2V2ZW50PiAgIDxzY2hlZHVsZV9ldmVudCBpZD0iNDIwIgogZXZl
+        bnRfdHlwZT0icmVwZWF0IiAKIHB1YmxpY190eXBlPSJwdWJsaWMiIAogCiBk
+        ZXRhaWw9IlJlcGVhdCYjeDIwO21vbnRoIiAKICAKIHZlcnNpb249IjE0NzQ5
+        ODM0ODIiCiB0aW1lem9uZT0iQXNpYS9Ub2t5byIKIAogYWxsZGF5PSJmYWxz
+        ZSIgCiBzdGFydF9vbmx5PSJmYWxzZSIKIAogID4KIAogPG1lbWJlcnMgeG1s
+        bnM9Imh0dHA6Ly9zY2hlbWFzLmN5Ym96dS5jby5qcC9zY2hlZHVsZS8yMDA4
+        Ij4KICAgPG1lbWJlcj4KIDx1c2VyIGlkPSI2IiBuYW1lPSLkvZDol6QmI3gy
+        MDvmmIciIG9yZGVyPSIwIi8+CiA8L21lbWJlcj4KICAgICAgPG1lbWJlcj4K
+        IDxmYWNpbGl0eSBpZD0iNCIgbmFtZT0i56ys5LiA5Lya6K2w5a6kIiBvcmRl
+        cj0iMSIvPgogPC9tZW1iZXI+CiAgIDwvbWVtYmVycz4KIAogCiAgCiAKICAK
+        ICA8cmVwZWF0X2luZm8geG1sbnM9Imh0dHA6Ly9zY2hlbWFzLmN5Ym96dS5j
+        by5qcC9zY2hlZHVsZS8yMDA4Ij4KIDxjb25kaXRpb24gdHlwZT0ibW9udGgi
+        IGRheT0iMjgiIAogd2Vlaz0iMCIgc3RhcnRfZGF0ZT0iMjAxNi0wOS0wMSIg
+        ZW5kX2RhdGU9IjIwMTYtMTItMjgiCiBzdGFydF90aW1lPSIxNjozMDowMCIg
+        ZW5kX3RpbWU9IjE3OjAwOjAwIi8+CiA8ZXhjbHVzaXZlX2RhdGV0aW1lcz4K
+        ICA8L2V4Y2x1c2l2ZV9kYXRldGltZXM+CiA8L3JlcGVhdF9pbmZvPgogIAog
+        ICAgCiAKICAgCiA8L3NjaGVkdWxlX2V2ZW50PiA8L3JldHVybnM+Cjwvc2No
+        ZWR1bGU6U2NoZWR1bGVBZGRFdmVudHNSZXNwb25zZT4KIDwvc29hcDpCb2R5
+        Pgo8L3NvYXA6RW52ZWxvcGU+
+    http_version: 
+  recorded_at: Tue, 27 Sep 2016 13:38:02 GMT
+recorded_with: VCR 2.9.2

@@ -39,7 +39,7 @@ service.schedule_add_event(
 
 ```
 service = Ragoon::Services::Notification.new
-notifications = service.retreive
+notifications = service.retrieve
 
 => [
 {:module_id=>"grn.schedule",

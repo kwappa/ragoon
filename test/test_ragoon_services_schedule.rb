@@ -10,7 +10,8 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
   dummy_opts = {
     endpoint: "http://example.com/path/to",
     username: "username",
-    password: "password"
+    password: "password",
+    version:  3
   }
 
   sub_test_case '.event_url(id)' do
@@ -18,7 +19,8 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
       opts = {
         garoon_endpoint: "http://example.com/path/to",
         garoon_username: "username",
-        garoon_password: "password"
+        garoon_password: "password",
+        garoon_version:  3
       }
       Ragoon.class_variable_set :@@secret_options, opts
       service = Ragoon::Services::Schedule.new
@@ -32,7 +34,8 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
       opts = {
         garoon_endpoint: "http://example.com/path/to?param=value&key=value",
         garoon_username: "username",
-        garoon_password: "password"
+        garoon_password: "password",
+        garoon_version:  3
       }
       Ragoon.class_variable_set :@@secret_options, opts
       service = Ragoon::Services::Schedule.new

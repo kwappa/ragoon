@@ -11,7 +11,8 @@ end
 TEST_ENDPOINT_OPTS = {
   endpoint: 'http://onlinedemo2.cybozu.info/scripts/garoon/grn.exe',
   username: 'sato',
-  password: 'sato'
+  password: 'sato',
+  version:  3
 }
 
 module TestHelper

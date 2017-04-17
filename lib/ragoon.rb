@@ -1,3 +1,7 @@
+require 'nokogiri'
+require 'rest-client'
+require 'time'
+
 require 'ragoon/version'
 require 'ragoon/xml'
 require 'ragoon/client'
@@ -6,9 +10,6 @@ require 'ragoon/services/schedule'
 require 'ragoon/services/notification'
 require 'ragoon/services/workflow'
 
-require 'nokogiri'
-require 'rest-client'
-
 module Ragoon
   @@secret_options = {}
 
@@ -16,7 +17,8 @@ module Ragoon
     {
       endpoint: ENV['GAROON_ENDPOINT'] || secret_options[:garoon_endpoint] || raise_option_error('endpoint'),
       username: ENV['GAROON_USERNAME'] || secret_options[:garoon_username] || raise_option_error('username'),
-      password: ENV['GAROON_PASSWORD'] || secret_options[:garoon_password] || raise_option_error('password')
+      password: ENV['GAROON_PASSWORD'] || secret_options[:garoon_password] || raise_option_error('password'),
+      version:  ENV['GAROON_VERSION']  || secret_options[:garoon_version]  || 4
     }
   end
 

@@ -1,8 +1,8 @@
 class Ragoon::Services
   SERVICE_LOCATIONS = {
-    schedule:     '/cbpapi/schedule/api?',
-    notification: '/cbpapi/notification/api?',
-    workflow:     '/cbpapi/workflow/api?',
+    schedule:     '/cbpapi/schedule/api.csp?',
+    notification: '/cbpapi/notification/api.csp?',
+    workflow:     '/cbpapi/workflow/api.csp?',
   }.freeze
 
   attr_reader :client, :action_type
@@ -14,7 +14,9 @@ class Ragoon::Services
   end
 
   def endpoint
-    "#{base_endpoint}#{SERVICE_LOCATIONS[action_type]}"
+    url = "#{base_endpoint}#{SERVICE_LOCATIONS[action_type]}"
+    url.gsub!('.csp', '') if @options[:version].to_i == 3
+    url
   end
 
   def self.start_and_end(date = Date.today)
@@ -49,5 +51,4 @@ class Ragoon::Services
     return nil if time.nil?
     time.utc.strftime('%FT%TZ')
   end
-
 end

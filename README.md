@@ -2,9 +2,15 @@
 
 [![Build Status](https://travis-ci.org/kwappa/ragoon.svg?branch=master)](https://travis-ci.org/kwappa/ragoon)
 
-Ragoon is simple Garoon 3 API Client.
+Ragoon is simple Garoon 4 API Client.
 
 - https://cybozudev.zendesk.com/hc/ja/categories/200157760-Garoon-API
+
+## !! BREAKING CHANGE !!
+
+Verson 1.0.0 contains a change with braking compatibility for Garoon 3 (Will be fixed later).
+
+Specify your garoon version (3 or 4) on your ENV or secret option.
 
 ## Usage
 

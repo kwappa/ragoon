@@ -4,6 +4,7 @@ require 'time'
 
 require 'ragoon/version'
 require 'ragoon/xml'
+require 'ragoon/error'
 require 'ragoon/client'
 require 'ragoon/services'
 require 'ragoon/services/schedule'

@@ -8,7 +8,6 @@
 /spec/reports/
 /tmp/
 /vendor/bundle/
-/.secret_options
+/.secret_options*
 /build/
 /release/
-

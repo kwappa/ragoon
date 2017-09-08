@@ -7,12 +7,18 @@ class Ragoon::Client
   end
 
   def request(action_name, body_node)
-    reset
-    @action_name = action_name
-    @body_node = body_node
-    @response = RestClient.post(endpoint, Ragoon::XML.render(action_name, body_node, @options))
-  ensure
-    raise_error unless result_set.xpath('//soap:Fault').empty?
+    @options[:retry].times do
+      begin
+        request_once(action_name, body_node)
+        return
+      rescue Ragoon::Error => e
+        unless e.message.include?('指定された画面はアクセスできません。')
+          raise e
+        end
+        sleep(0.5)
+      end
+    end
+    raise Ragoon::Error("試行回数が#{@options[:retry]}回を超えたので終了しました。")
   end
 
   def result_set
@@ -24,6 +30,15 @@ class Ragoon::Client
   end
 
   private
+
+  def request_once(action_name, body_node)
+    reset
+    @action_name = action_name
+    @body_node = body_node
+    @response = RestClient.post(endpoint, Ragoon::XML.render(action_name, body_node, @options))
+  ensure
+    raise_error unless result_set.xpath('//soap:Fault').empty?
+  end
 
   def raise_error
     raise Ragoon::Error.new(

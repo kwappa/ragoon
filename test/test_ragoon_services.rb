@@ -30,6 +30,7 @@ class TestRagoonServices < Test::Unit::TestCase
       ENV['GAROON_USERNAME'] = "username"
       ENV['GAROON_PASSWORD'] = "password"
       ENV['GAROON_VERSION']  = '3'
+      ENV['GAROON_RETRY']    = '1'
       service = Ragoon::Services::Schedule.new
       assert_equal("http://example.com/by_env/cbpapi/schedule/api?",
                    service.endpoint)
@@ -40,6 +41,7 @@ class TestRagoonServices < Test::Unit::TestCase
       ENV['GAROON_USERNAME'] = "username"
       ENV['GAROON_PASSWORD'] = "password"
       ENV['GAROON_VERSION']  = '4'
+      ENV['GAROON_RETRY']    = '1'
       service = Ragoon::Services::Schedule.new
       assert_equal("http://example.com/by_env/cbpapi/schedule/api.csp?",
                    service.endpoint)
@@ -50,7 +52,8 @@ class TestRagoonServices < Test::Unit::TestCase
         endpoint: "http://example.com/by_secret",
         username: "username",
         password: "password",
-        version:  3
+        version:  3,
+        retry:    1,
       }
       Ragoon.class_variable_set :@@secret_options, opts
       service = Ragoon::Services::Schedule.new
@@ -63,7 +66,8 @@ class TestRagoonServices < Test::Unit::TestCase
         endpoint: "http://example.com/cgi?p1=val&p2=val",
         username: "username",
         password: "password",
-        version:  3
+        version:  3,
+        retry:    1,
       }
       Ragoon.class_variable_set :@@secret_options, opts
       service = Ragoon::Services::Schedule.new
@@ -76,7 +80,8 @@ class TestRagoonServices < Test::Unit::TestCase
         endpoint: "http://example.com/by_arg",
         username: "username",
         password: "password",
-        version:  3
+        version:  3,
+        retry:    1
       )
       assert_equal("http://example.com/by_arg/cbpapi/schedule/api?",
                    service.endpoint)
@@ -87,6 +92,7 @@ class TestRagoonServices < Test::Unit::TestCase
       ENV.delete('GAROON_USERNAME')
       ENV.delete('GAROON_PASSWORD')
       ENV.delete('GAROON_VERSION')
+      ENV.delete('GAROON_RETRY')
       Ragoon.class_variable_set :@@secret_options, {}
     end
   end
@@ -97,6 +103,7 @@ class TestRagoonServices < Test::Unit::TestCase
       ENV['GAROON_USERNAME'] = "username"
       ENV['GAROON_PASSWORD'] = "password"
       ENV['GAROON_VERSION']  = '3'
+      ENV['GAROON_RETRY']    = '1'
       @service = Ragoon::Services::Schedule.new
     end
 
@@ -109,6 +116,7 @@ class TestRagoonServices < Test::Unit::TestCase
       ENV.delete('GAROON_USERNAME')
       ENV.delete('GAROON_PASSWORD')
       ENV.delete('GAROON_VERSION')
+      ENV.delete('GAROON_RETRY')
     end
   end
 end

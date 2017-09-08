@@ -11,7 +11,8 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
     endpoint: "http://example.com/path/to",
     username: "username",
     password: "password",
-    version:  3
+    version:  3,
+    retry:    1,
   }
 
   sub_test_case '.event_url(id)' do
@@ -20,7 +21,8 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
         endpoint: "http://example.com/path/to",
         username: "username",
         password: "password",
-        version:  3
+        version:  3,
+        retry:    1
       }
       Ragoon.class_variable_set :@@secret_options, opts
 
@@ -36,7 +38,8 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
         endpoint: "http://example.com/path/to?param=value&key=value",
         username: "username",
         password: "password",
-        version:  3
+        version:  3,
+        retry:    1
       }
       Ragoon.class_variable_set :@@secret_options, opts
 

@@ -19,7 +19,8 @@ module Ragoon
       endpoint: ENV['GAROON_ENDPOINT'] || raise_option_error('endpoint'),
       username: ENV['GAROON_USERNAME'] || raise_option_error('username'),
       password: ENV['GAROON_PASSWORD'] || raise_option_error('password'),
-      version:  ENV['GAROON_VERSION']  || 4
+      version:  ENV['GAROON_VERSION']  || 4,
+      retry:    ENV['GAROON_RETRY']    || 10,
     }
   end
 

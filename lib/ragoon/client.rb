@@ -8,7 +8,6 @@ class Ragoon::Client
 
   def request(action_name, body_node)
     retry_count = @options[:retry].to_i
-    raise Ragoon::Error.new("試行回数が#{retry_count}回を超えたので終了しました。")
 
     retry_count.times do
       begin

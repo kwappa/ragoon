@@ -7,7 +7,7 @@ class Ragoon::Services
 
   attr_reader :client, :action_type
 
-  def initialize(options = Ragoon.default_options)
+  def initialize(options = Ragoon.secret_options)
     @options = options
     @action_type = self.class.name.split('::').pop.downcase.to_sym
     @client = Ragoon::Client.new(self.endpoint, options)

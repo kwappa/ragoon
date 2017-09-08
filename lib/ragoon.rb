@@ -15,10 +15,10 @@ module Ragoon
 
   def self.default_options
     {
-      endpoint: ENV['GAROON_ENDPOINT'] || secret_options[:garoon_endpoint] || raise_option_error('endpoint'),
-      username: ENV['GAROON_USERNAME'] || secret_options[:garoon_username] || raise_option_error('username'),
-      password: ENV['GAROON_PASSWORD'] || secret_options[:garoon_password] || raise_option_error('password'),
-      version:  ENV['GAROON_VERSION']  || secret_options[:garoon_version]  || 4
+      endpoint: ENV['GAROON_ENDPOINT'] || raise_option_error('endpoint'),
+      username: ENV['GAROON_USERNAME'] || raise_option_error('username'),
+      password: ENV['GAROON_PASSWORD'] || raise_option_error('password'),
+      version:  ENV['GAROON_VERSION']  || 4
     }
   end
 
@@ -30,8 +30,11 @@ module Ragoon
 
   def self.secret_options
     if @@secret_options.empty?
-      raise '`./.secret_options` is required.' unless File.exists?('./.secret_options')
-      @@secret_options = eval(File.read('./.secret_options'))
+      if File.exist?('./.secret_options')
+        @@secret_options = eval(File.read('./.secret_options'))
+      else
+        @@secret_options = default_options
+      end
     end
     @@secret_options
   end

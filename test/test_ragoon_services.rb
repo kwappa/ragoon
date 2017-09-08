@@ -47,10 +47,10 @@ class TestRagoonServices < Test::Unit::TestCase
 
     test 'by secret_options' do
       opts = {
-        garoon_endpoint: "http://example.com/by_secret",
-        garoon_username: "username",
-        garoon_password: "password",
-        garoon_version:  3
+        endpoint: "http://example.com/by_secret",
+        username: "username",
+        password: "password",
+        version:  3
       }
       Ragoon.class_variable_set :@@secret_options, opts
       service = Ragoon::Services::Schedule.new
@@ -60,10 +60,10 @@ class TestRagoonServices < Test::Unit::TestCase
 
     test 'with query' do
       opts = {
-        garoon_endpoint: "http://example.com/cgi?p1=val&p2=val",
-        garoon_username: "username",
-        garoon_password: "password",
-        garoon_version:  3
+        endpoint: "http://example.com/cgi?p1=val&p2=val",
+        username: "username",
+        password: "password",
+        version:  3
       }
       Ragoon.class_variable_set :@@secret_options, opts
       service = Ragoon::Services::Schedule.new

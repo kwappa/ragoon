@@ -17,12 +17,13 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
   sub_test_case '.event_url(id)' do
     test 'endpoint without query' do
       opts = {
-        garoon_endpoint: "http://example.com/path/to",
-        garoon_username: "username",
-        garoon_password: "password",
-        garoon_version:  3
+        endpoint: "http://example.com/path/to",
+        username: "username",
+        password: "password",
+        version:  3
       }
       Ragoon.class_variable_set :@@secret_options, opts
+
       service = Ragoon::Services::Schedule.new
       assert_equal("http://example.com/path/to/schedule/view?event=11",
                    service.event_url(11))
@@ -32,12 +33,13 @@ class TestRagoonServicesSchedule < Test::Unit::TestCase
 
     test 'endpoint with query' do
       opts = {
-        garoon_endpoint: "http://example.com/path/to?param=value&key=value",
-        garoon_username: "username",
-        garoon_password: "password",
-        garoon_version:  3
+        endpoint: "http://example.com/path/to?param=value&key=value",
+        username: "username",
+        password: "password",
+        version:  3
       }
       Ragoon.class_variable_set :@@secret_options, opts
+
       service = Ragoon::Services::Schedule.new
       assert_equal("http://example.com/path/to/schedule/view?event=11",
                    service.event_url(11))

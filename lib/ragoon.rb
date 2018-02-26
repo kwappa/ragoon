@@ -21,6 +21,7 @@ module Ragoon
       password: ENV['GAROON_PASSWORD'] || raise_option_error('password'),
       version:  ENV['GAROON_VERSION']  || 4,
       retry:    ENV['GAROON_RETRY']    || 10,
+      skip_verify_ssl: !!ENV['SKIP_VERIFY_SSL'] || false,
     }
   end
 

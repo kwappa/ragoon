@@ -12,6 +12,21 @@ Verson 1.0.0 contains a change with braking compatibility for Garoon 3 (Will be 
 
 Specify your garoon version (3 or 4) on your ENV or secret option.
 
+## Environment Variables
+
+Specify options via ENV
+
+- `GAROON_ENDPOINT`
+  - Specify URL of your Garoon's API endpoint that ends with `?WSDL`
+- `GAROON_USERNAME`
+- `GAROON_PASSWORD`
+- `GAROON_VERSION`
+  - Default :  4
+- `GAROON_RETRY`
+  - Default : 10
+- `SKIP_VERIFY_SSL`
+  - If this variable is specified, POST request with `OpenSSL::SSL::VERIFY_NONE`.
+
 ## Usage
 
 ### Schedule

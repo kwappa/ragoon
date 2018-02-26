@@ -37,7 +37,14 @@ class Ragoon::Client
     reset
     @action_name = action_name
     @body_node = body_node
-    @response = RestClient.post(endpoint, Ragoon::XML.render(action_name, body_node, @options))
+
+    rest_options = {}
+    if (@options[:skip_verify_ssl])
+      rest_options[:verify_ssl] = OpenSSL::SSL::VERIFY_NONE
+    end
+    rest_client = RestClient::Resource.new(endpoint, rest_options)
+
+    @response = rest_client.post(Ragoon::XML.render(action_name, body_node, @options))
   ensure
     raise_error unless result_set.xpath('//soap:Fault').empty?
   end
